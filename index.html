@@ -17,14 +17,15 @@
 :root{--ink:#080810;--ink2:#0D0D1A;--card:#111120;--gold:#FFD700;--blue:#00B4FF;--red:#FF3B3B;--purple:#9B5FFF;--dim:#606080;--white:#F2F2FF;--gy:rgba(255,215,0,.25)}
 html{scroll-behavior:smooth}
 body{background:var(--ink);color:var(--white);font-family:'Sarabun',sans-serif;overflow-x:hidden;cursor:none}
-.cursor{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s,opacity .3s;mix-blend-mode:difference;opacity:0}
-.cursor.visible{opacity:1}
-.cursor.hovering{width:60px;height:60px;background:rgba(255,215,0,.12);border-color:var(--gold)}
-.cursor.clicking{width:28px;height:28px;background:rgba(255,215,0,.3)}
+/* CURSOR */
+.cursor{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,opacity .3s;mix-blend-mode:difference;opacity:0}
+.cursor.visible{opacity:1}.cursor.hovering{width:60px;height:60px;background:rgba(255,215,0,.12)}.cursor.clicking{width:28px;height:28px;background:rgba(255,215,0,.3)}
 .cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;mix-blend-mode:difference}
 .cursor-dot.visible{opacity:1}
 @media(hover:none){.cursor,.cursor-dot{display:none}body{cursor:auto}}
+/* SIDE LABEL */
 .side-label{position:fixed;left:0;top:50%;transform:translateY(-50%) translateX(-100%) rotate(-90deg);transform-origin:right center;font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;letter-spacing:.25em;color:#fff;white-space:nowrap;z-index:50;pointer-events:none;mix-blend-mode:difference;margin-left:1.6rem;padding:.5rem 1rem}
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(8,8,16,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,215,0,.08)}
 .logo{font-family:'Orbitron',monospace;font-weight:900;font-size:.95rem;color:var(--gold);text-decoration:none;letter-spacing:.1em}
 .logo em{color:var(--blue);font-style:normal}
@@ -34,6 +35,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-cta{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.2);padding:.45rem 1.3rem;border-radius:99px;font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;text-decoration:none;letter-spacing:.08em;display:flex;align-items:center;gap:.5rem;transition:all .2s}
 .nav-cta span{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#080810;display:flex;align-items:center;justify-content:center;font-size:.7rem}
 .nav-cta:hover{border-color:var(--gold);color:var(--gold)}
+/* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:7rem 3rem 5rem;position:relative;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
 .orb1{width:700px;height:700px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(155,95,255,.15) 0%,transparent 65%)}
@@ -44,9 +46,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-inner{position:relative;z-index:1;max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 460px;gap:4rem;align-items:center}
 .hero-eye{font-family:'Orbitron',monospace;font-size:.6rem;font-weight:700;letter-spacing:.3em;color:var(--blue);margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem}
 .hero-eye::before{content:'';display:inline-block;width:32px;height:1px;background:var(--blue)}
-.hero-h1{font-family:'Orbitron',monospace;font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:900;line-height:1.0;letter-spacing:-.02em;margin-bottom:1.6rem}
-.hero-h1 .l1{color:var(--white);display:block;margin-bottom:.1em}
-.hero-h1 .l2{color:var(--gold);display:block;text-shadow:0 0 80px rgba(255,215,0,.4)}
+/* 3D TEXT REVEAL — Baunfire staggerFromTo จริง */
+.hero-h1{font-family:'Orbitron',monospace;font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:900;line-height:1.0;letter-spacing:-.02em;margin-bottom:1.6rem;perspective:1200px;transform-style:preserve-3d}
+.l1{color:var(--white);display:block;margin-bottom:.1em}
+.l2{color:var(--gold);display:block;text-shadow:0 0 80px rgba(255,215,0,.4)}
+.char{display:inline-block;will-change:transform,opacity;transform-origin:left center}
 .swap-wrap{display:inline-flex;align-items:center;gap:.6rem;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;letter-spacing:.15em;margin-bottom:2rem;color:var(--dim)}
 .swap-word{color:var(--gold)}
 .hero-desc{color:var(--dim);font-size:1.05rem;line-height:1.8;max-width:480px;margin-bottom:2.4rem}
@@ -56,6 +60,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-gold .arr{width:26px;height:26px;border-radius:50%;background:#080810;display:flex;align-items:center;justify-content:center;font-size:.7rem}
 .btn-ghost{background:transparent;color:var(--white);padding:.9rem 2rem;border-radius:99px;border:1px solid rgba(255,255,255,.15);font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;text-decoration:none;letter-spacing:.06em;transition:border-color .2s,color .2s}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+/* SCROLL INDICATOR — Baunfire จริง */
+.scroll-indicator{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:.8rem;z-index:10}
+.scroll-line{width:40px;height:1.5px;background:var(--gold);transform:scaleX(0);transform-origin:left}
+.scroll-label{font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;letter-spacing:.2em;color:var(--dim);opacity:0}
+/* BEACON */
 .beacon-col{display:flex;align-items:center;justify-content:center}
 .beacon{width:340px;height:340px;position:relative;display:flex;align-items:center;justify-content:center}
 .b-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid transparent}
@@ -77,21 +86,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pb-ctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#080810;border:3px solid rgba(255,215,0,.45);z-index:3}
 .pb-shine{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:rgba(0,180,255,.45);z-index:4}
 .pb-glare{position:absolute;top:12px;left:22px;width:18px;height:10px;border-radius:50%;background:rgba(255,255,255,.18);z-index:5}
+/* MARQUEE */
 .marquee-wrap{overflow:hidden;background:var(--gold);padding:.8rem 0}
 .marquee-swiper{overflow:hidden}
 .marquee-item{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:#080810;letter-spacing:.18em;white-space:nowrap;padding:0 2.5rem;display:flex;align-items:center;gap:2.5rem;width:auto!important}
 .m-dot{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.3);flex-shrink:0}
+/* STATS */
 .stats-wrap{padding:4rem 3rem;border-bottom:1px solid rgba(255,215,0,.07)}
 .stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
 .stat{text-align:center;padding:2rem;position:relative}
 .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,215,0,.08)}
 .stat-n{font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:900;color:var(--gold);text-shadow:0 0 30px var(--gy);display:block}
 .stat-l{font-size:.75rem;color:var(--dim);letter-spacing:.12em;margin-top:.3rem;font-weight:600}
+/* SECTIONS */
 .sec{padding:7rem 3rem}.sec-inner{max-width:1200px;margin:0 auto}
 .sec--dark{background:var(--ink)}.sec--mid{background:var(--ink2)}.sec--accent{background:#0A0A1E}
 .s-eye{font-family:'Orbitron',monospace;font-size:.6rem;font-weight:700;letter-spacing:.25em;color:var(--gold);margin-bottom:.8rem}
 .s-title{font-family:'Orbitron',monospace;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:var(--white);margin-bottom:.7rem;line-height:1.1}
 .s-sub{color:var(--dim);font-size:1rem;line-height:1.8;margin-bottom:3.5rem;max-width:520px}
+/* EVENTS */
 .ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.06);border-radius:16px;overflow:hidden}
 .ev-card{background:var(--card);padding:2.2rem;position:relative;overflow:hidden;transition:background .2s}
 .ev-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .35s}
@@ -105,6 +118,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .ev-title{font-weight:700;font-size:1.1rem;color:var(--white);margin-bottom:.4rem;line-height:1.3}
 .ev-date{font-family:'Orbitron',monospace;font-size:.72rem;color:var(--blue);font-weight:700;margin-bottom:.8rem}
 .ev-desc{font-size:.9rem;color:var(--dim);line-height:1.6}
+/* GALLERY */
 .gallery-swiper{overflow:hidden;padding:2rem 0 3rem}
 .gallery-swiper .swiper-wrapper{align-items:center;padding:1rem 0}
 .g-slide{width:320px!important;height:220px;position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,.08);transform:rotate(-1.5deg);transition:transform .4s cubic-bezier(.25,.46,.45,.94),border-color .3s}
@@ -113,6 +127,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .g-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,var(--card) 0%,rgba(155,95,255,.06) 100%)}
 .g-icon{font-size:2.8rem;opacity:.35}.g-txt{font-family:'Orbitron',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.18em}
 .g-label{position:absolute;bottom:0;left:0;right:0;padding:.8rem 1.1rem;background:linear-gradient(to top,rgba(8,8,16,.95) 0%,transparent 100%);font-size:.85rem;color:var(--white);font-weight:700}
+/* STEPS */
 .steps-layout{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
 .steps-sticky{position:sticky;top:100px}
 .step{border:1px solid rgba(255,215,0,.08);border-radius:12px;padding:1.8rem 2rem;background:var(--card);margin-bottom:1rem;transition:border-color .3s,background .3s,transform .3s;cursor:default}
@@ -121,6 +136,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .step-icon{font-size:1.6rem;margin-bottom:.7rem}
 .step-title{font-weight:700;font-size:1.05rem;color:var(--white);margin-bottom:.4rem}
 .step-desc{font-size:.9rem;color:var(--dim);line-height:1.6}
+/* SOCIAL */
 .social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.06);border-radius:16px;overflow:hidden}
 .social-card{background:var(--card);padding:2.2rem 1.8rem;text-align:center;text-decoration:none;transition:background .2s;display:flex;flex-direction:column;align-items:center;gap:.8rem;position:relative;overflow:hidden}
 .social-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform .3s}
@@ -131,9 +147,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sc-handle{font-size:.82rem;color:var(--dim)}.sc-tag{font-size:.58rem;font-weight:700;padding:.2rem .6rem;border-radius:4px;margin-top:.2rem;display:inline-block}
 .fb .sc-tag{background:rgba(0,180,255,.15);color:var(--blue)}.ig .sc-tag{background:rgba(225,48,108,.15);color:#E1306C}
 .tt .sc-tag{background:rgba(105,201,208,.15);color:#69C9D0}.ln .sc-tag{background:rgba(6,199,85,.15);color:#06C755}
+/* BIG CTA */
 .big-cta-wrap{overflow:hidden;background:var(--ink);padding:5rem 0;border-top:1px solid rgba(255,215,0,.07);border-bottom:1px solid rgba(255,215,0,.07)}
-.big-cta-swiper{overflow:hidden}.big-cta-item{font-family:'Orbitron',monospace;font-size:clamp(3rem,6vw,5.5rem);font-weight:900;color:rgba(255,215,0,.08);white-space:nowrap;padding:0 3rem;letter-spacing:-.02em;display:flex;align-items:center;gap:3rem;width:auto!important;transition:color .5s}
+.big-cta-swiper{overflow:hidden}
+.big-cta-item{font-family:'Orbitron',monospace;font-size:clamp(3rem,6vw,5.5rem);font-weight:900;color:rgba(255,215,0,.08);white-space:nowrap;padding:0 3rem;letter-spacing:-.02em;display:flex;align-items:center;gap:3rem;width:auto!important;transition:color .5s}
 .big-cta-dot{width:1rem;height:1rem;border-radius:50%;background:rgba(255,215,0,.15);flex-shrink:0}
+/* JOIN + FOOTER */
 .join-sec{padding:8rem 3rem;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(155,95,255,.08) 0%,var(--ink) 70%)}
 .join-sec .s-title{font-size:clamp(2rem,5vw,3.5rem);margin:0 auto 1rem}
 .join-sec .s-sub{margin:0 auto 3rem;text-align:center}.join-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
@@ -151,7 +170,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
   .ev-grid{grid-template-columns:1fr}.social-grid{grid-template-columns:1fr 1fr}
   .stats-inner{grid-template-columns:1fr 1fr}
   nav{padding:0 1.2rem}.nav-links{display:none}.sec{padding:5rem 1.5rem}
-  body{cursor:auto}
+  .scroll-indicator{display:none}body{cursor:auto}
 }
 @media(prefers-reduced-motion:reduce){.b-ring,.b-pulse,.orb{animation:none!important}}
 </style>
@@ -173,13 +192,20 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
 <section class="hero">
   <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
   <div class="hero-ghost">POGO</div><div class="hero-grid"></div>
+  <div class="scroll-indicator" id="scrollIndicator">
+    <div class="scroll-line" id="scrollLine"></div>
+    <span class="scroll-label" id="scrollLabel">SCROLL</span>
+  </div>
   <div class="hero-inner">
     <div>
-      <div class="hero-eye">POKEMON GO · จังหวัดสระบุรี · THAILAND</div>
-      <h1 class="hero-h1"><span class="l1">รวมทีม<br>สระบุรี</span><span class="l2">POGO SARABURI</span></h1>
-      <div class="swap-wrap">WE DO &nbsp;·&nbsp; <span class="swap-word" id="swapWord">RAID</span></div>
-      <p class="hero-desc">กลุ่มผู้เล่น Pokemon GO จังหวัดสระบุรี รวมตัว Raid, Community Day และกิจกรรมพิเศษ ยินดีต้อนรับทุกทีม ทุกระดับ ทุกช่วงวัย</p>
-      <div class="hero-ctas">
+      <div class="hero-eye" id="heroEye">POKEMON GO · จังหวัดสระบุรี · THAILAND</div>
+      <h1 class="hero-h1">
+        <span class="l1" id="heroL1">รวมทีม สระบุรี</span><br>
+        <span class="l2" id="heroL2">POGO SARABURI</span>
+      </h1>
+      <div class="swap-wrap" id="swapWrap">WE DO &nbsp;·&nbsp; <span class="swap-word" id="swapWord">RAID</span></div>
+      <p class="hero-desc" id="heroDesc">กลุ่มผู้เล่น Pokemon GO จังหวัดสระบุรี รวมตัว Raid, Community Day และกิจกรรมพิเศษ ยินดีต้อนรับทุกทีม ทุกระดับ ทุกช่วงวัย</p>
+      <div class="hero-ctas" id="heroCtas">
         <a class="btn-gold" href="#join"><span class="arr">↗</span>เข้าร่วมตอนนี้</a>
         <a class="btn-ghost" href="#events">ดูกิจกรรม →</a>
       </div>
@@ -248,9 +274,9 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
         <a class="btn-gold" href="https://www.facebook.com/groups/pokemongosaraburi" target="_blank" rel="noopener" style="display:inline-flex;width:fit-content"><span class="arr">↗</span>เข้าร่วมเลย</a>
       </div>
       <div id="stepsList">
-        <div class="step active" data-step="0"><div class="step-icon">📘</div><div class="step-num">STEP 01</div><div class="step-title">เข้าร่วม Facebook Group</div><div class="step-desc">ค้นหา "Pokemon GO Saraburi" ใน Facebook แล้วกด Request to join</div></div>
-        <div class="step" data-step="1"><div class="step-icon">💬</div><div class="step-num">STEP 02</div><div class="step-title">แนะนำตัวในกลุ่ม</div><div class="step-desc">โพสต์แนะนำตัว บอก Trainer Name, ทีม และ Level ของคุณ</div></div>
-        <div class="step" data-step="2"><div class="step-icon">⚔️</div><div class="step-num">STEP 03</div><div class="step-title">ร่วม Raid ครั้งแรก</div><div class="step-desc">ติดตามโพสต์นัดหมาย Raid ในกลุ่ม มาร่วมสนุกกับเพื่อนๆ เทรนเนอร์สระบุรี</div></div>
+        <div class="step active"><div class="step-icon">📘</div><div class="step-num">STEP 01</div><div class="step-title">เข้าร่วม Facebook Group</div><div class="step-desc">ค้นหา "Pokemon GO Saraburi" ใน Facebook แล้วกด Request to join</div></div>
+        <div class="step"><div class="step-icon">💬</div><div class="step-num">STEP 02</div><div class="step-title">แนะนำตัวในกลุ่ม</div><div class="step-desc">โพสต์แนะนำตัว บอก Trainer Name, ทีม และ Level ของคุณ</div></div>
+        <div class="step"><div class="step-icon">⚔️</div><div class="step-num">STEP 03</div><div class="step-title">ร่วม Raid ครั้งแรก</div><div class="step-desc">ติดตามโพสต์นัดหมาย Raid ในกลุ่ม มาร่วมสนุกกับเพื่อนๆ เทรนเนอร์สระบุรี</div></div>
       </div>
     </div>
   </div>
@@ -261,9 +287,9 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
     <p class="s-sub">ติดตามข่าวสารกิจกรรมผ่านทุกช่องทางของกลุ่ม</p>
     <div class="social-grid">
       <a class="social-card fb" href="https://www.facebook.com/groups/pokemongosaraburi" target="_blank" rel="noopener"><div class="sc-icon">📘</div><div class="sc-name">FACEBOOK</div><div class="sc-handle">Pokemon GO Saraburi</div><span class="sc-tag">ช่องทางหลัก</span></a>
-      <a class="social-card ig" href="#" target="_blank" rel="noopener"><div class="sc-icon">📸</div><div class="sc-name">INSTAGRAM</div><div class="sc-handle">@pogosaraburi</div><span class="sc-tag">รูปกิจกรรม</span></a>
-      <a class="social-card tt" href="#" target="_blank" rel="noopener"><div class="sc-icon">🎵</div><div class="sc-name">TIKTOK</div><div class="sc-handle">@pogosaraburi</div><span class="sc-tag">คลิปกิจกรรม</span></a>
-      <a class="social-card ln" href="#" target="_blank" rel="noopener"><div class="sc-icon">💬</div><div class="sc-name">LINE</div><div class="sc-handle">กลุ่ม LINE สระบุรี</div><span class="sc-tag">นัดหมาย</span></a>
+      <a class="social-card ig" href="#"><div class="sc-icon">📸</div><div class="sc-name">INSTAGRAM</div><div class="sc-handle">@pogosaraburi</div><span class="sc-tag">รูปกิจกรรม</span></a>
+      <a class="social-card tt" href="#"><div class="sc-icon">🎵</div><div class="sc-name">TIKTOK</div><div class="sc-handle">@pogosaraburi</div><span class="sc-tag">คลิปกิจกรรม</span></a>
+      <a class="social-card ln" href="#"><div class="sc-icon">💬</div><div class="sc-name">LINE</div><div class="sc-handle">กลุ่ม LINE สระบุรี</div><span class="sc-tag">นัดหมาย</span></a>
     </div>
   </div>
 </section>
@@ -296,7 +322,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
 </footer>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
-  // 1. CUSTOM CURSOR — lerp follow แบบ TweenMax ของ Co&Co จริง
+  // 1. CURSOR
   const cur=document.getElementById('cursor'),dot=document.getElementById('cursorDot');
   let mx=0,my=0,cx=0,cy=0,dx=0,dy=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.classList.add('visible');dot.classList.add('visible')});
@@ -313,32 +339,65 @@ document.addEventListener('DOMContentLoaded',function(){
   // 2. WORD SWAP
   const words=['RAID','COMMUNITY DAY','SPECIAL EVENT','TEAM BATTLE','POGO SARABURI'];
   let wi=0;const sw=document.getElementById('swapWord');
-  if(sw){sw.style.transition='opacity .35s ease,transform .35s ease';setInterval(()=>{sw.style.opacity='0';sw.style.transform='translateY(-10px)';setTimeout(()=>{wi=(wi+1)%words.length;sw.textContent=words[wi];sw.style.opacity='1';sw.style.transform='translateY(0)'},350)},2800)}
+  if(sw){sw.style.transition='opacity .35s,transform .35s';setInterval(()=>{sw.style.opacity='0';sw.style.transform='translateY(-10px)';setTimeout(()=>{wi=(wi+1)%words.length;sw.textContent=words[wi];sw.style.opacity='1';sw.style.transform='translateY(0)'},350)},2800)}
 
-  // 3. SWIPER — ตรงกับ Co&Co source code จริง
+  // 3. SWIPERS — Co&Co source exact params
   if(typeof Swiper!=='undefined'){
-    // Marquee: slidesPerView:'auto', speed:25000, delay:0 แบบ Co&Co pageBlockticker
     new Swiper('#swiperMarquee',{slidesPerView:'auto',spaceBetween:0,loop:true,centeredSlides:true,speed:25000,grabCursor:false,allowTouchMove:false,autoplay:{delay:0,disableOnInteraction:false}});
-    // Gallery: grabCursor:true แบบ Co&Co carousel
     new Swiper('#swiperGallery',{slidesPerView:'auto',spaceBetween:24,grabCursor:true,loop:false,freeMode:{enabled:true,sticky:false},breakpoints:{320:{slidesPerView:1.3,spaceBetween:16},640:{slidesPerView:2.1,spaceBetween:20},1024:{slidesPerView:3.1,spaceBetween:24},1280:{slidesPerView:3.5,spaceBetween:24}}});
-    // Big CTA: speed:50000, delay:false แบบ Co&Co footerCta จริง
     new Swiper('#swiperBigCta',{slidesPerView:'auto',spaceBetween:0,loop:true,speed:50000,grabCursor:false,allowTouchMove:false,autoplay:{delay:false,disableOnInteraction:false}});
   }
 
-  // 4. GSAP — รอ defer โหลด
+  // 4. GSAP — Baunfire 3D text reveal + Co&Co scroll reveal
   function initG(){
     if(typeof gsap==='undefined'){setTimeout(initG,80);return}
-    // Aurora orbs float (GSAP smooth กว่า CSS)
+
+    // Baunfire type_fourth = power4.inOut
+    // Baunfire source: type_fourth ≈ cubic-bezier(0.77,0,0.175,1)
+    const T4='power4.inOut', T3='power3.inOut';
+
+    // 3D TEXT REVEAL — Baunfire staggerFromTo จริงๆ
+    // Source: staggerFromTo('.text',1.2,{opacity:0,x:-10,z:2000,rotationY:-90},{opacity:1,...}, -0.05)
+    function splitChars(el){
+      const txt=el.textContent; el.innerHTML=''; el.style.perspective='1200px';
+      return[...txt].map(c=>{const s=document.createElement('span');s.className='char';s.textContent=c===' '?' ':c;s.style.display='inline-block';el.appendChild(s);return s});
+    }
+    const l1El=document.getElementById('heroL1');
+    const l2El=document.getElementById('heroL2');
+    const cl1=l1El?splitChars(l1El):[];
+    const cl2=l2El?splitChars(l2El):[];
+
+    // Set 3D initial state — แบบ Baunfire
+    gsap.set([cl1,cl2],{opacity:0,rotationY:-90,z:800,x:-8,transformOrigin:'left center'});
+
+    // Animate — stagger overlap แบบ Baunfire (-0.05 = chars overlap)
+    const tl=gsap.timeline({delay:.15});
+    tl.to(cl1,{opacity:1,rotationY:0,z:0,x:0,duration:1.2,ease:T4,stagger:{each:.04,from:'start'}})
+      .to(cl2,{opacity:1,rotationY:0,z:0,x:0,duration:1.1,ease:T4,stagger:{each:.035,from:'start'}},'-=0.8');
+
+    // Supporting hero elements
+    gsap.from('#heroEye',{opacity:0,x:-20,duration:.8,ease:T3,delay:.1});
+    gsap.from('#swapWrap',{opacity:0,y:10,duration:.7,ease:'power2.out',delay:.9});
+    gsap.from('#heroDesc',{opacity:0,y:20,duration:.9,ease:'power2.out',delay:1.0});
+    gsap.from('#heroCtas',{opacity:0,y:20,duration:.9,ease:'power2.out',delay:1.15});
+    gsap.from('.beacon',{opacity:0,scale:.85,duration:1.3,ease:T4,delay:.2});
+
+    // SCROLL INDICATOR — Baunfire scaleX line จริง
+    const sl=document.getElementById('scrollLine'), lb=document.getElementById('scrollLabel');
+    if(sl&&lb){
+      gsap.to(sl,{scaleX:1,transformOrigin:'left',duration:.85,ease:T4,delay:1.5});
+      gsap.to(lb,{opacity:1,duration:.6,ease:'power2.out',delay:1.8});
+      window.addEventListener('scroll',()=>{
+        const h=window.scrollY>80;
+        gsap.to('#scrollIndicator',{opacity:h?0:1,y:h?10:0,duration:.4,ease:'power2.out'});
+      },{passive:true});
+    }
+
+    // Aurora orbs
     gsap.to('.orb1',{x:50,y:30,scale:1.12,duration:12,repeat:-1,yoyo:true,ease:'sine.inOut'});
     gsap.to('.orb2',{x:-35,y:-25,scale:1.1,duration:15,repeat:-1,yoyo:true,ease:'sine.inOut',delay:3});
     gsap.to('.orb3',{x:25,y:45,scale:1.15,duration:18,repeat:-1,yoyo:true,ease:'sine.inOut',delay:7});
-    // Hero entrance
-    gsap.from('.hero-h1 .l1',{opacity:0,y:40,duration:1.1,ease:'power3.out',delay:.2});
-    gsap.from('.hero-h1 .l2',{opacity:0,y:40,duration:1.1,ease:'power3.out',delay:.4});
-    gsap.from('.hero-eye',{opacity:0,x:-20,duration:.8,ease:'power2.out',delay:.1});
-    gsap.from('.hero-desc',{opacity:0,y:20,duration:.9,ease:'power2.out',delay:.6});
-    gsap.from('.hero-ctas',{opacity:0,y:20,duration:.9,ease:'power2.out',delay:.75});
-    gsap.from('.beacon',{opacity:0,scale:.85,duration:1.2,ease:'power3.out',delay:.3});
+
     // Scroll reveals
     document.querySelectorAll('.ev-card,.social-card,.stat').forEach((el,i)=>{
       gsap.set(el,{opacity:0,y:32});
@@ -346,16 +405,14 @@ document.addEventListener('DOMContentLoaded',function(){
     });
     document.querySelectorAll('.s-title,.s-eye,.s-sub').forEach((el,i)=>{
       gsap.set(el,{opacity:0,y:18});
-      new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)gsap.to(el,{opacity:1,y:0,duration:.75,delay:i*.03,ease:'power3.out'})})},{threshold:.2}).observe(el);
+      new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)gsap.to(el,{opacity:1,y:0,duration:.75,delay:i*.03,ease:T3})})},{threshold:.2}).observe(el);
     });
-    // Big CTA color — แบบ Co&Co footerCta GSAP color change จริง
     new IntersectionObserver(en=>{en.forEach(e=>{gsap.to('.big-cta-item',{color:e.isIntersecting?'rgba(255,215,0,.22)':'rgba(255,215,0,.06)',duration:.8,ease:'power2.out'})})},{threshold:.2}).observe(document.querySelector('.big-cta-wrap')||document.body);
   }
   initG();
 
   // 5. STICKY STEPS
   const steps=document.querySelectorAll('.step');
-  new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){steps.forEach(s=>s.classList.remove('active'));e.target.classList.add('active')}})},{threshold:.55,rootMargin:'-15% 0px -15% 0px'}).observe;
   steps.forEach(s=>new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){steps.forEach(x=>x.classList.remove('active'));e.target.classList.add('active')}})},{threshold:.55,rootMargin:'-15% 0px -15% 0px'}).observe(s));
 });
 </script>
