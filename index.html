@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokémon GO Saraburi | กลุ่มสระบุรี</title>
+  <meta name="description" content="กลุ่ม Pokémon GO จังหวัดสระบุรี — รวมทีม Raid, Community Day, และกิจกรรมต่างๆ ในสระบุรี" />
+  <meta property="og:title" content="Pokémon GO Saraburi" />
+  <meta property="og:description" content="กลุ่ม Pokémon GO จังหวัดสระบุรี รวมทีม Raid และกิจกรรม" />
+  <meta property="og:url" content="https://pogosaraburi.com" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0A0F;
+      --bg2:       #10101A;
+      --card:      #14141F;
+      --border:    rgba(255,215,0,0.15);
+      --yellow:    #FFD700;
+      --blue:      #00B4FF;
+      --red:       #FF3B3B;
+      --purple:    #9B5FFF;
+      --white:     #F0F0FF;
+      --muted:     #8888AA;
+      --glow-y:    rgba(255,215,0,0.25);
+      --glow-b:    rgba(0,180,255,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Sarabun', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--yellow);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+    .nav-join {
+      background: var(--yellow);
+      color: #0A0A0F;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .nav-join:hover {
+      box-shadow: 0 0 20px var(--glow-y);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(0,180,255,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 30% 60%, rgba(155,95,255,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 50% 20%, rgba(255,215,0,0.05) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(var(--blue) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--blue) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 1100px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 2px;
+      background: var(--blue);
+    }
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title .line1 { color: var(--white); }
+    .hero-title .line2 {
+      color: var(--yellow);
+      text-shadow: 0 0 40px var(--glow-y);
+    }
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+      max-width: 480px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--yellow);
+      color: #0A0A0F;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 30px var(--glow-y);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--yellow); color: var(--yellow); }
+
+    /* ── POKÉBALL BEACON (Signature Element) ── */
+    .beacon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .beacon {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .beacon-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      animation: spin-ring 6s linear infinite;
+    }
+    .beacon-ring.r1 {
+      border-top-color: var(--yellow);
+      border-right-color: rgba(255,215,0,0.3);
+      animation-duration: 6s;
+    }
+    .beacon-ring.r2 {
+      inset: 16px;
+      border-bottom-color: var(--blue);
+      border-left-color: rgba(0,180,255,0.3);
+      animation-duration: 9s;
+      animation-direction: reverse;
+    }
+    .beacon-ring.r3 {
+      inset: 32px;
+      border-top-color: var(--purple);
+      border-right-color: rgba(155,95,255,0.2);
+      animation-duration: 12s;
+    }
+    @keyframes spin-ring {
+      to { transform: rotate(360deg); }
+    }
+    .beacon-core {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 3px solid rgba(255,215,0,0.3);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative;
+      box-shadow:
+        0 0 40px rgba(255,215,0,0.1),
+        inset 0 0 30px rgba(0,0,0,0.5);
+    }
+    .pokeball-svg { width: 90px; opacity: 0.9; }
+    .beacon-pulse {
+      position: absolute; inset: -20px;
+      border-radius: 50%;
+      border: 1px solid var(--yellow);
+      opacity: 0;
+      animation: pulse 3s ease-out infinite;
+    }
+    .beacon-pulse:nth-child(2) { animation-delay: 1s; }
+    .beacon-pulse:nth-child(3) { animation-delay: 2s; }
+    @keyframes pulse {
+      0%   { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+    }
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--yellow);
+      text-shadow: 0 0 20px var(--glow-y);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--yellow);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+    }
+
+    /* ── EVENTS GRID ── */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+    .event-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--yellow), var(--blue));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .event-card:hover {
+      border-color: rgba(255,215,0,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    .event-card:hover::before { opacity: 1; }
+    .event-type {
+      display: inline-block;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 4px;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+    .type-raid    { background: rgba(255,59,59,0.15);  color: var(--red);    border: 1px solid rgba(255,59,59,0.3); }
+    .type-cd      { background: rgba(255,215,0,0.12);  color: var(--yellow); border: 1px solid rgba(255,215,0,0.3); }
+    .type-special { background: rgba(155,95,255,0.12); color: var(--purple); border: 1px solid rgba(155,95,255,0.3); }
+    .event-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .event-date {
+      font-size: 0.85rem;
+      color: var(--blue);
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      margin-bottom: 0.6rem;
+    }
+    .event-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── SOCIAL ── */
+    #social { background: var(--bg2); }
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .social-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.8rem;
+    }
+    .social-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    .social-card.fb:hover  { border-color: #1877F2; box-shadow: 0 8px 30px rgba(24,119,242,0.2); }
+    .social-card.ig:hover  { border-color: #E1306C; box-shadow: 0 8px 30px rgba(225,48,108,0.2); }
+    .social-card.tt:hover  { border-color: #69C9D0; box-shadow: 0 8px 30px rgba(105,201,208,0.2); }
+    .social-card.line:hover{ border-color: #06C755; box-shadow: 0 8px 30px rgba(6,199,85,0.2); }
+    .social-icon { font-size: 2rem; }
+    .social-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+    .social-handle { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 1rem; }
+    .feature-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      color: var(--white); font-size: 0.95rem;
+    }
+    .feature-list li::before {
+      content: '◆';
+      color: var(--yellow);
+      font-size: 0.6rem;
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+    .about-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .mini-card:nth-child(2) { margin-top: 1.5rem; }
+    .mini-card:nth-child(4) { margin-top: -1.5rem; }
+    .mini-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+    .mini-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── JOIN CTA ── */
+    .join-section {
+      background: linear-gradient(135deg, rgba(255,215,0,0.05) 0%, rgba(0,180,255,0.05) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .join-section .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+    .join-section .section-sub { margin: 0 auto 2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--yellow);
+      margin-bottom: 0.5rem;
+    }
+    .footer-logo span { color: var(--blue); }
+    .footer-note { font-size: 0.8rem; color: var(--muted); }
+    .footer-disclaimer {
+      font-size: 0.7rem;
+      color: rgba(136,136,170,0.5);
+      margin-top: 0.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-sub { margin: 0 auto 2rem; }
+      .hero-ctas { justify-content: center; }
+      .hero-eyebrow { justify-content: center; }
+      .beacon-wrap { order: -1; }
+      .beacon { width: 200px; height: 200px; }
+      .beacon-core { width: 130px; height: 130px; }
+      .pokeball-svg { width: 65px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { display: none; }
+      .nav-links { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .beacon-ring, .beacon-pulse { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">POGO<span>SARABURI</span></a>
+  <ul class="nav-links">
+    <li><a href="#events">กิจกรรม</a></li>
+    <li><a href="#social">ติดตาม</a></li>
+    <li><a href="#about">เกี่ยวกับเรา</a></li>
+  </ul>
+  <a class="nav-join" href="#join">เข้าร่วมกลุ่ม</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Pokémon GO · จังหวัดสระบุรี</div>
+      <h1 class="hero-title">
+        <span class="line1">รวมทีม<br>สระบุรี</span><br>
+        <span class="line2">POGO SARABURI</span>
+      </h1>
+      <p class="hero-sub">กลุ่มผู้เล่น Pokémon GO จังหวัดสระบุรี รวมตัว Raid, Community Day และกิจกรรมพิเศษ สำหรับทุกระดับ ทุกช่วงวัย</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#join">เข้าร่วมตอนนี้</a>
+        <a class="btn-secondary" href="#events">ดูกิจกรรม</a>
+      </div>
+    </div>
+    <div class="beacon-wrap">
+      <div class="beacon">
+        <div class="beacon-ring r1"></div>
+        <div class="beacon-ring r2"></div>
+        <div class="beacon-ring r3"></div>
+        <div class="beacon-core">
+          <div class="beacon-pulse"></div>
+          <div class="beacon-pulse"></div>
+          <div class="beacon-pulse"></div>
+          <!-- Pokéball SVG -->
+          <svg class="pokeball-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,215,0,0.4)" stroke-width="2"/>
+            <path d="M2 50 A48 48 0 0 1 98 50" fill="#FF3B3B" opacity="0.8"/>
+            <path d="M2 50 A48 48 0 0 0 98 50" fill="#1A1A2E" opacity="0.9"/>
+            <rect x="2" y="46" width="96" height="8" fill="rgba(255,215,0,0.6)"/>
+            <circle cx="50" cy="50" r="14" fill="#0A0A0F" stroke="rgba(255,215,0,0.5)" stroke-width="2"/>
+            <circle cx="50" cy="50" r="8" fill="#1A1A2E" stroke="rgba(0,180,255,0.6)" stroke-width="1.5"/>
+            <circle cx="47" cy="47" r="2.5" fill="rgba(255,255,255,0.3)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">สมาชิกกลุ่ม</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3 ทีม</span>
+      <span class="stat-label">Mystic · Valor · Instinct</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">Lv.40+</span>
+      <span class="stat-label">เทรนเนอร์ระดับสูง</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">ทุกสัปดาห์</span>
+      <span class="stat-label">กิจกรรม Raid</span>
+    </div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-inner">
+    <div class="section-eyebrow">กิจกรรมล่าสุด</div>
+    <h2 class="section-title">กิจกรรมและนัดหมาย</h2>
+    <p class="section-sub">อัพเดตกิจกรรม Raid, Community Day และ Event พิเศษในสระบุรี</p>
+    <div class="events-grid">
+      <div class="event-card">
+        <span class="event-type type-cd">Community Day</span>
+        <div class="event-title">Community Day เดือนนี้</div>
+        <div class="event-date">อัพเดตเร็วๆ นี้</div>
+        <div class="event-desc">ติดตามข้อมูลกิจกรรม Community Day ประจำเดือนจากกลุ่มของเรา</div>
+      </div>
+      <div class="event-card">
+        <span class="event-type type-raid">Raid Hour</span>
+        <div class="event-title">Raid Hour ประจำสัปดาห์</div>
+        <div class="event-date">ทุกวันพุธ 18:00 – 19:00</div>
+        <div class="event-desc">รวมทีม Raid 5 ดาวทุกสัปดาห์ ติดตามจุดนัดพบใน Facebook Group</div>
+      </div>
+      <div class="event-card">
+        <span class="event-type type-special">Special</span>
+        <div class="event-title">กิจกรรมพิเศษ</div>
+        <div class="event-date">อัพเดตเร็วๆ นี้</div>
+        <div class="event-desc">กิจกรรมพิเศษและ Event จาก Niantic ในพื้นที่สระบุรี</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="social">
+  <div class="section-inner">
+    <div class="section-eyebrow">ติดตามเรา</div>
+    <h2 class="section-title">ช่องทางโซเชียล</h2>
+    <p class="section-sub">ติดตามข่าวสารและกิจกรรมผ่านช่องทางต่างๆ ของกลุ่ม</p>
+    <div class="social-grid">
+      <a class="social-card fb" href="https://www.facebook.com/groups/pokemongosaraburi" target="_blank" rel="noopener">
+        <span class="social-icon">📘</span>
+        <span class="social-name">FACEBOOK</span>
+        <span class="social-handle">Pokémon GO Saraburi</span>
+      </a>
+      <a class="social-card ig" href="#" target="_blank" rel="noopener">
+        <span class="social-icon">📸</span>
+        <span class="social-name">INSTAGRAM</span>
+        <span class="social-handle">@pogosaraburi</span>
+      </a>
+      <a class="social-card tt" href="#" target="_blank" rel="noopener">
+        <span class="social-icon">🎵</span>
+        <span class="social-name">TIKTOK</span>
+        <span class="social-handle">@pogosaraburi</span>
+      </a>
+      <a class="social-card line" href="#" target="_blank" rel="noopener">
+        <span class="social-icon">💬</span>
+        <span class="social-name">LINE</span>
+        <span class="social-handle">กลุ่ม LINE สระบุรี</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-eyebrow">เกี่ยวกับกลุ่ม</div>
+        <h2 class="section-title">กลุ่มผู้เล่นสระบุรี</h2>
+        <p>กลุ่ม Pokémon GO Saraburi รวบรวมเทรนเนอร์จากทั่วจังหวัดสระบุรี ไม่ว่าจะเป็น มือใหม่หรือเก๋าเกม ทุกทีม ทุกระดับ</p>
+        <p>เราจัดกิจกรรม Raid, Community Day, และ Event พิเศษต่างๆ ร่วมกันอย่างสม่ำเสมอ เพื่อสร้างประสบการณ์เกมที่ดีและมิตรภาพที่ยั่งยืน</p>
+        <ul class="feature-list">
+          <li>รวมทีม Raid ทุกสัปดาห์ทั่วสระบุรี</li>
+          <li>อัพเดตกิจกรรมจาก Niantic ล่าสุด</li>
+          <li>แชร์ข้อมูล Spawn Spot และ Nest</li>
+          <li>ยินดีต้อนรับทุกทีม ทุกช่วงอายุ</li>
+        </ul>
+      </div>
+      <div class="about-visual">
+        <div class="mini-card">
+          <div class="mini-num" style="color:#00B4FF">💙</div>
+          <div class="mini-label" style="color:#00B4FF;font-weight:700">MYSTIC</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-num" style="color:#FF3B3B">❤️</div>
+          <div class="mini-label" style="color:#FF3B3B;font-weight:700">VALOR</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-num" style="color:#FFD700">💛</div>
+          <div class="mini-label" style="color:#FFD700;font-weight:700">INSTINCT</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-num">🎮</div>
+          <div class="mini-label">ทุกทีม ยินดีต้อนรับ</div>
+        </div>
