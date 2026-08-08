@@ -9,12 +9,22 @@
 <meta property="og:url" content="https://pogosaraburi.com"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--ink:#080810;--ink2:#0D0D1A;--card:#111120;--gold:#FFD700;--blue:#00B4FF;--red:#FF3B3B;--purple:#9B5FFF;--dim:#606080;--white:#F2F2FF;--gy:rgba(255,215,0,.25)}
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--white);font-family:'Sarabun',sans-serif;overflow-x:hidden}
-.side-label{position:fixed;left:0;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;letter-spacing:.25em;color:rgba(255,215,0,.3);white-space:nowrap;z-index:50;pointer-events:none;margin-left:1.8rem}
+body{background:var(--ink);color:var(--white);font-family:'Sarabun',sans-serif;overflow-x:hidden;cursor:none}
+.cursor{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s,opacity .3s;mix-blend-mode:difference;opacity:0}
+.cursor.visible{opacity:1}
+.cursor.hovering{width:60px;height:60px;background:rgba(255,215,0,.12);border-color:var(--gold)}
+.cursor.clicking{width:28px;height:28px;background:rgba(255,215,0,.3)}
+.cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;mix-blend-mode:difference}
+.cursor-dot.visible{opacity:1}
+@media(hover:none){.cursor,.cursor-dot{display:none}body{cursor:auto}}
+.side-label{position:fixed;left:0;top:50%;transform:translateY(-50%) translateX(-100%) rotate(-90deg);transform-origin:right center;font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;letter-spacing:.25em;color:#fff;white-space:nowrap;z-index:50;pointer-events:none;mix-blend-mode:difference;margin-left:1.6rem;padding:.5rem 1rem}
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(8,8,16,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,215,0,.08)}
 .logo{font-family:'Orbitron',monospace;font-weight:900;font-size:.95rem;color:var(--gold);text-decoration:none;letter-spacing:.1em}
 .logo em{color:var(--blue);font-style:normal}
@@ -68,10 +78,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pb-shine{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:rgba(0,180,255,.45);z-index:4}
 .pb-glare{position:absolute;top:12px;left:22px;width:18px;height:10px;border-radius:50%;background:rgba(255,255,255,.18);z-index:5}
 .marquee-wrap{overflow:hidden;background:var(--gold);padding:.8rem 0}
-.marquee-track{display:flex;animation:mq 28s linear infinite;width:max-content}
-.marquee-track:hover{animation-play-state:paused}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.marquee-item{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:#080810;letter-spacing:.18em;white-space:nowrap;padding:0 2.5rem;display:flex;align-items:center;gap:2.5rem}
+.marquee-swiper{overflow:hidden}
+.marquee-item{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:#080810;letter-spacing:.18em;white-space:nowrap;padding:0 2.5rem;display:flex;align-items:center;gap:2.5rem;width:auto!important}
 .m-dot{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.3);flex-shrink:0}
 .stats-wrap{padding:4rem 3rem;border-bottom:1px solid rgba(255,215,0,.07)}
 .stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
@@ -79,19 +87,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,215,0,.08)}
 .stat-n{font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:900;color:var(--gold);text-shadow:0 0 30px var(--gy);display:block}
 .stat-l{font-size:.75rem;color:var(--dim);letter-spacing:.12em;margin-top:.3rem;font-weight:600}
-.sec{padding:7rem 3rem}
-.sec-inner{max-width:1200px;margin:0 auto}
-.sec--dark{background:var(--ink)}
-.sec--mid{background:var(--ink2)}
-.sec--accent{background:#0A0A1E}
+.sec{padding:7rem 3rem}.sec-inner{max-width:1200px;margin:0 auto}
+.sec--dark{background:var(--ink)}.sec--mid{background:var(--ink2)}.sec--accent{background:#0A0A1E}
 .s-eye{font-family:'Orbitron',monospace;font-size:.6rem;font-weight:700;letter-spacing:.25em;color:var(--gold);margin-bottom:.8rem}
 .s-title{font-family:'Orbitron',monospace;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:var(--white);margin-bottom:.7rem;line-height:1.1}
 .s-sub{color:var(--dim);font-size:1rem;line-height:1.8;margin-bottom:3.5rem;max-width:520px}
 .ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.06);border-radius:16px;overflow:hidden}
 .ev-card{background:var(--card);padding:2.2rem;position:relative;overflow:hidden;transition:background .2s}
 .ev-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .35s}
-.ev-card:hover{background:#161628}
-.ev-card:hover::after{transform:scaleX(1)}
+.ev-card:hover{background:#161628}.ev-card:hover::after{transform:scaleX(1)}
 .ev-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:'Orbitron',monospace;font-size:.58rem;font-weight:700;letter-spacing:.14em;padding:.3rem .8rem;border-radius:4px;margin-bottom:1.1rem}
 .b-raid{background:rgba(255,59,59,.1);color:var(--red);border:1px solid rgba(255,59,59,.2)}
 .b-cd{background:rgba(255,215,0,.09);color:var(--gold);border:1px solid rgba(255,215,0,.2)}
@@ -101,15 +105,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .ev-title{font-weight:700;font-size:1.1rem;color:var(--white);margin-bottom:.4rem;line-height:1.3}
 .ev-date{font-family:'Orbitron',monospace;font-size:.72rem;color:var(--blue);font-weight:700;margin-bottom:.8rem}
 .ev-desc{font-size:.9rem;color:var(--dim);line-height:1.6}
-.gallery-outer{overflow:hidden;padding:2rem 0 3rem;cursor:grab}
-.gallery-outer.dragging{cursor:grabbing}
-.gallery-track{display:flex;gap:1.5rem;width:max-content;padding:1rem 0}
-.g-slide{flex-shrink:0;width:320px;height:220px;position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,.08);transform:rotate(-1.5deg);transition:transform .3s,border-color .3s}
+.gallery-swiper{overflow:hidden;padding:2rem 0 3rem}
+.gallery-swiper .swiper-wrapper{align-items:center;padding:1rem 0}
+.g-slide{width:320px!important;height:220px;position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,215,0,.08);transform:rotate(-1.5deg);transition:transform .4s cubic-bezier(.25,.46,.45,.94),border-color .3s}
 .g-slide:nth-child(even){transform:rotate(1.5deg)}
-.g-slide:hover{transform:rotate(0deg) scale(1.03)!important;border-color:rgba(255,215,0,.3)}
+.g-slide:hover{transform:rotate(0deg) scale(1.04)!important;border-color:rgba(255,215,0,.35)}
 .g-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,var(--card) 0%,rgba(155,95,255,.06) 100%)}
-.g-icon{font-size:2.8rem;opacity:.35}
-.g-txt{font-family:'Orbitron',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.18em}
+.g-icon{font-size:2.8rem;opacity:.35}.g-txt{font-family:'Orbitron',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.18em}
 .g-label{position:absolute;bottom:0;left:0;right:0;padding:.8rem 1.1rem;background:linear-gradient(to top,rgba(8,8,16,.95) 0%,transparent 100%);font-size:.85rem;color:var(--white);font-weight:700}
 .steps-layout{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
 .steps-sticky{position:sticky;top:100px}
@@ -122,59 +124,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.06);border-radius:16px;overflow:hidden}
 .social-card{background:var(--card);padding:2.2rem 1.8rem;text-align:center;text-decoration:none;transition:background .2s;display:flex;flex-direction:column;align-items:center;gap:.8rem;position:relative;overflow:hidden}
 .social-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform .3s}
-.social-card.fb::before{background:var(--blue)}
-.social-card.ig::before{background:linear-gradient(90deg,#E1306C,#F77737)}
-.social-card.tt::before{background:#69C9D0}
-.social-card.ln::before{background:#06C755}
-.social-card:hover{background:#161628}
-.social-card:hover::before{transform:scaleX(1)}
-.sc-icon{font-size:2rem}
-.sc-name{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:var(--white);letter-spacing:.08em}
-.sc-handle{font-size:.82rem;color:var(--dim)}
-.sc-tag{font-size:.58rem;font-weight:700;padding:.2rem .6rem;border-radius:4px;margin-top:.2rem;display:inline-block}
-.fb .sc-tag{background:rgba(0,180,255,.15);color:var(--blue)}
-.ig .sc-tag{background:rgba(225,48,108,.15);color:#E1306C}
-.tt .sc-tag{background:rgba(105,201,208,.15);color:#69C9D0}
-.ln .sc-tag{background:rgba(6,199,85,.15);color:#06C755}
+.social-card.fb::before{background:var(--blue)}.social-card.ig::before{background:linear-gradient(90deg,#E1306C,#F77737)}
+.social-card.tt::before{background:#69C9D0}.social-card.ln::before{background:#06C755}
+.social-card:hover{background:#161628}.social-card:hover::before{transform:scaleX(1)}
+.sc-icon{font-size:2rem}.sc-name{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:var(--white);letter-spacing:.08em}
+.sc-handle{font-size:.82rem;color:var(--dim)}.sc-tag{font-size:.58rem;font-weight:700;padding:.2rem .6rem;border-radius:4px;margin-top:.2rem;display:inline-block}
+.fb .sc-tag{background:rgba(0,180,255,.15);color:var(--blue)}.ig .sc-tag{background:rgba(225,48,108,.15);color:#E1306C}
+.tt .sc-tag{background:rgba(105,201,208,.15);color:#69C9D0}.ln .sc-tag{background:rgba(6,199,85,.15);color:#06C755}
 .big-cta-wrap{overflow:hidden;background:var(--ink);padding:5rem 0;border-top:1px solid rgba(255,215,0,.07);border-bottom:1px solid rgba(255,215,0,.07)}
-.big-cta-track{display:flex;animation:mq2 20s linear infinite;width:max-content}
-.big-cta-track:hover{animation-play-state:paused}
-@keyframes mq2{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.big-cta-item{font-family:'Orbitron',monospace;font-size:clamp(3rem,6vw,5.5rem);font-weight:900;color:rgba(255,215,0,.08);white-space:nowrap;padding:0 3rem;letter-spacing:-.02em;display:flex;align-items:center;gap:3rem}
+.big-cta-swiper{overflow:hidden}.big-cta-item{font-family:'Orbitron',monospace;font-size:clamp(3rem,6vw,5.5rem);font-weight:900;color:rgba(255,215,0,.08);white-space:nowrap;padding:0 3rem;letter-spacing:-.02em;display:flex;align-items:center;gap:3rem;width:auto!important;transition:color .5s}
 .big-cta-dot{width:1rem;height:1rem;border-radius:50%;background:rgba(255,215,0,.15);flex-shrink:0}
 .join-sec{padding:8rem 3rem;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(155,95,255,.08) 0%,var(--ink) 70%)}
 .join-sec .s-title{font-size:clamp(2rem,5vw,3.5rem);margin:0 auto 1rem}
-.join-sec .s-sub{margin:0 auto 3rem;text-align:center}
-.join-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.join-sec .s-sub{margin:0 auto 3rem;text-align:center}.join-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3rem;position:relative}
-.footer-big{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;color:rgba(255,215,0,.1);letter-spacing:-.01em;margin-bottom:2rem;line-height:1.1}
+.footer-big{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;color:rgba(255,215,0,.12);letter-spacing:-.01em;margin-bottom:2rem;line-height:1.1}
 .footer-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .footer-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:.95rem;color:var(--gold)}
-.footer-logo em{color:var(--blue);font-style:normal}
-.footer-note{font-size:.78rem;color:var(--dim)}
+.footer-logo em{color:var(--blue);font-style:normal}.footer-note{font-size:.78rem;color:var(--dim)}
 .footer-dis{font-size:.65rem;color:rgba(96,96,128,.4);margin-top:.8rem}
 @media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr;text-align:center}
-  .hero-eye{justify-content:center}
-  .hero-desc{margin:0 auto 2rem}
-  .hero-ctas{justify-content:center}
-  .beacon-col{order:-1}
-  .beacon{width:220px;height:220px}
-  .b-core{width:130px;height:130px}
-  .pokeball{width:68px;height:68px}
-  .steps-layout{grid-template-columns:1fr}
-  .steps-sticky{position:relative;top:0}
-  .ev-grid{grid-template-columns:1fr}
-  .social-grid{grid-template-columns:1fr 1fr}
+  .hero-inner{grid-template-columns:1fr;text-align:center}.hero-eye{justify-content:center}
+  .hero-desc{margin:0 auto 2rem}.hero-ctas{justify-content:center}.beacon-col{order:-1}
+  .beacon{width:220px;height:220px}.b-core{width:130px;height:130px}.pokeball{width:68px;height:68px}
+  .steps-layout{grid-template-columns:1fr}.steps-sticky{position:relative;top:0}
+  .ev-grid{grid-template-columns:1fr}.social-grid{grid-template-columns:1fr 1fr}
   .stats-inner{grid-template-columns:1fr 1fr}
-  nav{padding:0 1.2rem}
-  .nav-links{display:none}
-  .sec{padding:5rem 1.5rem}
+  nav{padding:0 1.2rem}.nav-links{display:none}.sec{padding:5rem 1.5rem}
+  body{cursor:auto}
 }
-@media(prefers-reduced-motion:reduce){.b-ring,.b-pulse,.orb,.marquee-track,.big-cta-track{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.b-ring,.b-pulse,.orb{animation:none!important}}
 </style>
 </head>
 <body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 <div class="side-label">POGOSARABURI.COM &nbsp;·&nbsp; กลุ่ม POKEMON GO สระบุรี</div>
 <nav>
   <a class="logo" href="#">POGO<em>SARABURI</em></a>
@@ -188,15 +172,11 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
 </nav>
 <section class="hero">
   <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
-  <div class="hero-ghost">POGO</div>
-  <div class="hero-grid"></div>
+  <div class="hero-ghost">POGO</div><div class="hero-grid"></div>
   <div class="hero-inner">
     <div>
       <div class="hero-eye">POKEMON GO · จังหวัดสระบุรี · THAILAND</div>
-      <h1 class="hero-h1">
-        <span class="l1">รวมทีม<br>สระบุรี</span>
-        <span class="l2">POGO SARABURI</span>
-      </h1>
+      <h1 class="hero-h1"><span class="l1">รวมทีม<br>สระบุรี</span><span class="l2">POGO SARABURI</span></h1>
       <div class="swap-wrap">WE DO &nbsp;·&nbsp; <span class="swap-word" id="swapWord">RAID</span></div>
       <p class="hero-desc">กลุ่มผู้เล่น Pokemon GO จังหวัดสระบุรี รวมตัว Raid, Community Day และกิจกรรมพิเศษ ยินดีต้อนรับทุกทีม ทุกระดับ ทุกช่วงวัย</p>
       <div class="hero-ctas">
@@ -206,8 +186,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
     </div>
     <div class="beacon-col">
       <div class="beacon">
-        <div class="b-ring r1"></div><div class="b-ring r2"></div>
-        <div class="b-ring r3"></div><div class="b-ring r4"></div>
+        <div class="b-ring r1"></div><div class="b-ring r2"></div><div class="b-ring r3"></div><div class="b-ring r4"></div>
         <div class="b-core">
           <div class="b-pulse p1"></div><div class="b-pulse p2"></div><div class="b-pulse p3"></div>
           <div class="pokeball"><div class="pb-top"></div><div class="pb-bot"></div><div class="pb-band"></div><div class="pb-ctr"></div><div class="pb-shine"></div><div class="pb-glare"></div></div>
@@ -217,10 +196,12 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
   </div>
 </section>
 <div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item">POGO SARABURI <span class="m-dot"></span> RAID HOUR <span class="m-dot"></span> COMMUNITY DAY <span class="m-dot"></span> TEAM MYSTIC <span class="m-dot"></span> TEAM VALOR <span class="m-dot"></span> TEAM INSTINCT <span class="m-dot"></span> สระบุรี <span class="m-dot"></span> LV.40+ <span class="m-dot"></span></div>
-    <div class="marquee-item">POGO SARABURI <span class="m-dot"></span> RAID HOUR <span class="m-dot"></span> COMMUNITY DAY <span class="m-dot"></span> TEAM MYSTIC <span class="m-dot"></span> TEAM VALOR <span class="m-dot"></span> TEAM INSTINCT <span class="m-dot"></span> สระบุรี <span class="m-dot"></span> LV.40+ <span class="m-dot"></span></div>
-    <div class="marquee-item">POGO SARABURI <span class="m-dot"></span> RAID HOUR <span class="m-dot"></span> COMMUNITY DAY <span class="m-dot"></span> TEAM MYSTIC <span class="m-dot"></span> TEAM VALOR <span class="m-dot"></span> TEAM INSTINCT <span class="m-dot"></span> สระบุรี <span class="m-dot"></span> LV.40+ <span class="m-dot"></span></div>
+  <div class="swiper marquee-swiper" id="swiperMarquee">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide marquee-item">POGO SARABURI <span class="m-dot"></span> RAID HOUR <span class="m-dot"></span> COMMUNITY DAY <span class="m-dot"></span> TEAM MYSTIC <span class="m-dot"></span> TEAM VALOR <span class="m-dot"></span> TEAM INSTINCT <span class="m-dot"></span> สระบุรี <span class="m-dot"></span> LV.40+ <span class="m-dot"></span></div>
+      <div class="swiper-slide marquee-item">POGO SARABURI <span class="m-dot"></span> RAID HOUR <span class="m-dot"></span> COMMUNITY DAY <span class="m-dot"></span> TEAM MYSTIC <span class="m-dot"></span> TEAM VALOR <span class="m-dot"></span> TEAM INSTINCT <span class="m-dot"></span> สระบุรี <span class="m-dot"></span> LV.40+ <span class="m-dot"></span></div>
+      <div class="swiper-slide marquee-item">POGO SARABURI <span class="m-dot"></span> RAID HOUR <span class="m-dot"></span> COMMUNITY DAY <span class="m-dot"></span> TEAM MYSTIC <span class="m-dot"></span> TEAM VALOR <span class="m-dot"></span> TEAM INSTINCT <span class="m-dot"></span> สระบุรี <span class="m-dot"></span> LV.40+ <span class="m-dot"></span></div>
+    </div>
   </div>
 </div>
 <div class="stats-wrap">
@@ -233,8 +214,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
 </div>
 <section class="sec sec--dark" id="events">
   <div class="sec-inner">
-    <div class="s-eye">— กิจกรรมล่าสุด</div>
-    <h2 class="s-title">กิจกรรมและนัดหมาย</h2>
+    <div class="s-eye">— กิจกรรมล่าสุด</div><h2 class="s-title">กิจกรรมและนัดหมาย</h2>
     <p class="s-sub">อัพเดต Raid, Community Day และ Event พิเศษในสระบุรี</p>
     <div class="ev-grid">
       <div class="ev-card"><div class="ev-badge b-cd"><span class="b-live"></span>COMMUNITY DAY</div><div class="ev-title">Community Day เดือนนี้</div><div class="ev-date">อัพเดตเร็วๆ นี้</div><div class="ev-desc">ติดตามข้อมูล Community Day ประจำเดือนจากกลุ่มของเรา</div></div>
@@ -245,18 +225,17 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
 </section>
 <section class="sec sec--mid" id="gallery">
   <div class="sec-inner">
-    <div class="s-eye">— แกลเลอรี่กิจกรรม</div>
-    <h2 class="s-title">ภาพกิจกรรมของพวกเรา</h2>
+    <div class="s-eye">— แกลเลอรี่กิจกรรม</div><h2 class="s-title">ภาพกิจกรรมของพวกเรา</h2>
     <p class="s-sub">ลาก Slide เพื่อดูภาพกิจกรรมต่างๆ ของกลุ่ม POGO Saraburi</p>
   </div>
-  <div class="gallery-outer" id="galleryOuter">
-    <div class="gallery-track" id="galleryTrack" style="padding-left:3rem">
-      <div class="g-slide"><div class="g-ph"><div class="g-icon">📸</div><div class="g-txt">COMMUNITY DAY</div></div><div class="g-label">Community Day · สระบุรี</div></div>
-      <div class="g-slide"><div class="g-ph"><div class="g-icon">⚔️</div><div class="g-txt">RAID HOUR</div></div><div class="g-label">Raid Hour · ทีมสระบุรี</div></div>
-      <div class="g-slide"><div class="g-ph"><div class="g-icon">🏆</div><div class="g-txt">PVP BATTLE</div></div><div class="g-label">PVP Tournament</div></div>
-      <div class="g-slide"><div class="g-ph"><div class="g-icon">🎉</div><div class="g-txt">GROUP EVENT</div></div><div class="g-label">กิจกรรมกลุ่ม · สระบุรี</div></div>
-      <div class="g-slide"><div class="g-ph"><div class="g-icon">🌟</div><div class="g-txt">SPECIAL EVENT</div></div><div class="g-label">Special Event · Niantic</div></div>
-      <div class="g-slide"><div class="g-ph"><div class="g-icon">🗺️</div><div class="g-txt">WALK TOGETHER</div></div><div class="g-label">Pokemon Walk · สระบุรี</div></div>
+  <div class="swiper gallery-swiper" id="swiperGallery" style="padding-left:3rem">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide g-slide"><div class="g-ph"><div class="g-icon">📸</div><div class="g-txt">COMMUNITY DAY</div></div><div class="g-label">Community Day · สระบุรี</div></div>
+      <div class="swiper-slide g-slide"><div class="g-ph"><div class="g-icon">⚔️</div><div class="g-txt">RAID HOUR</div></div><div class="g-label">Raid Hour · ทีมสระบุรี</div></div>
+      <div class="swiper-slide g-slide"><div class="g-ph"><div class="g-icon">🏆</div><div class="g-txt">PVP BATTLE</div></div><div class="g-label">PVP Tournament</div></div>
+      <div class="swiper-slide g-slide"><div class="g-ph"><div class="g-icon">🎉</div><div class="g-txt">GROUP EVENT</div></div><div class="g-label">กิจกรรมกลุ่ม · สระบุรี</div></div>
+      <div class="swiper-slide g-slide"><div class="g-ph"><div class="g-icon">🌟</div><div class="g-txt">SPECIAL EVENT</div></div><div class="g-label">Special Event · Niantic</div></div>
+      <div class="swiper-slide g-slide"><div class="g-ph"><div class="g-icon">🗺️</div><div class="g-txt">WALK TOGETHER</div></div><div class="g-label">Pokemon Walk · สระบุรี</div></div>
     </div>
   </div>
 </section>
@@ -264,12 +243,11 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
   <div class="sec-inner">
     <div class="steps-layout">
       <div class="steps-sticky">
-        <div class="s-eye">— วิธีเข้าร่วม</div>
-        <h2 class="s-title">เริ่มออกล่า<br>ด้วยกัน</h2>
+        <div class="s-eye">— วิธีเข้าร่วม</div><h2 class="s-title">เริ่มออกล่า<br>ด้วยกัน</h2>
         <p class="s-sub">เข้าร่วมกลุ่มง่ายๆ ภายใน 3 ขั้นตอน ฟรี ไม่มีค่าใช้จ่าย</p>
         <a class="btn-gold" href="https://www.facebook.com/groups/pokemongosaraburi" target="_blank" rel="noopener" style="display:inline-flex;width:fit-content"><span class="arr">↗</span>เข้าร่วมเลย</a>
       </div>
-      <div class="steps-list" id="stepsList">
+      <div id="stepsList">
         <div class="step active" data-step="0"><div class="step-icon">📘</div><div class="step-num">STEP 01</div><div class="step-title">เข้าร่วม Facebook Group</div><div class="step-desc">ค้นหา "Pokemon GO Saraburi" ใน Facebook แล้วกด Request to join</div></div>
         <div class="step" data-step="1"><div class="step-icon">💬</div><div class="step-num">STEP 02</div><div class="step-title">แนะนำตัวในกลุ่ม</div><div class="step-desc">โพสต์แนะนำตัว บอก Trainer Name, ทีม และ Level ของคุณ</div></div>
         <div class="step" data-step="2"><div class="step-icon">⚔️</div><div class="step-num">STEP 03</div><div class="step-title">ร่วม Raid ครั้งแรก</div><div class="step-desc">ติดตามโพสต์นัดหมาย Raid ในกลุ่ม มาร่วมสนุกกับเพื่อนๆ เทรนเนอร์สระบุรี</div></div>
@@ -279,8 +257,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
 </section>
 <section class="sec sec--dark" id="social">
   <div class="sec-inner">
-    <div class="s-eye">— ติดตามเรา</div>
-    <h2 class="s-title">ช่องทางโซเชียล</h2>
+    <div class="s-eye">— ติดตามเรา</div><h2 class="s-title">ช่องทางโซเชียล</h2>
     <p class="s-sub">ติดตามข่าวสารกิจกรรมผ่านทุกช่องทางของกลุ่ม</p>
     <div class="social-grid">
       <a class="social-card fb" href="https://www.facebook.com/groups/pokemongosaraburi" target="_blank" rel="noopener"><div class="sc-icon">📘</div><div class="sc-name">FACEBOOK</div><div class="sc-handle">Pokemon GO Saraburi</div><span class="sc-tag">ช่องทางหลัก</span></a>
@@ -291,10 +268,13 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
   </div>
 </section>
 <div class="big-cta-wrap">
-  <div class="big-cta-track">
-    <div class="big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
-    <div class="big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
-    <div class="big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
+  <div class="swiper big-cta-swiper" id="swiperBigCta">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
+      <div class="swiper-slide big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
+      <div class="swiper-slide big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
+      <div class="swiper-slide big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
+    </div>
   </div>
 </div>
 <section class="join-sec" id="join">
@@ -315,28 +295,70 @@ footer{background:var(--ink2);border-top:1px solid rgba(255,215,0,.07);padding:3
   <div class="footer-dis">เว็บไซต์นี้จัดทำโดยแฟนคลับ ไม่มีส่วนเกี่ยวข้องกับ Niantic, Inc. หรือ The Pokemon Company</div>
 </footer>
 <script>
-const words=['RAID','COMMUNITY DAY','POGO SARABURI','SPECIAL EVENT','TEAM BATTLE'];
-let wi=0;
-const el=document.getElementById('swapWord');
-el.style.transition='opacity .3s,transform .3s';
-setInterval(()=>{
-  el.style.opacity='0';el.style.transform='translateY(-8px)';
-  setTimeout(()=>{wi=(wi+1)%words.length;el.textContent=words[wi];el.style.opacity='1';el.style.transform='translateY(0)'},300);
-},2500);
-const go=document.getElementById('galleryOuter');
-let down=false,sx,sl;
-go.addEventListener('mousedown',e=>{down=true;go.classList.add('dragging');sx=e.pageX-go.offsetLeft;sl=go.scrollLeft});
-go.addEventListener('mouseleave',()=>{down=false;go.classList.remove('dragging')});
-go.addEventListener('mouseup',()=>{down=false;go.classList.remove('dragging')});
-go.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();go.scrollLeft=sl-(e.pageX-go.offsetLeft-sx)*1.4});
-go.addEventListener('touchstart',e=>{sx=e.touches[0].pageX;sl=go.scrollLeft});
-go.addEventListener('touchmove',e=>{go.scrollLeft=sl-(e.touches[0].pageX-sx)});
-const steps=document.querySelectorAll('.step');
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){steps.forEach(s=>s.classList.remove('active'));e.target.classList.add('active')}})},{threshold:0.6,rootMargin:'-15% 0px -15% 0px'});
-steps.forEach(s=>obs.observe(s));
-const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:0.1});
-document.querySelectorAll('.ev-card,.step,.social-card,.stat').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(24px)';el.style.transition='opacity .6s ease,transform .6s ease';ro.observe(el)});
+document.addEventListener('DOMContentLoaded',function(){
+  // 1. CUSTOM CURSOR — lerp follow แบบ TweenMax ของ Co&Co จริง
+  const cur=document.getElementById('cursor'),dot=document.getElementById('cursorDot');
+  let mx=0,my=0,cx=0,cy=0,dx=0,dy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.classList.add('visible');dot.classList.add('visible')});
+  document.addEventListener('mouseleave',()=>{cur.classList.remove('visible');dot.classList.remove('visible')});
+  document.addEventListener('mouseenter',()=>{cur.classList.add('visible');dot.classList.add('visible')});
+  document.addEventListener('mousedown',()=>cur.classList.add('clicking'));
+  document.addEventListener('mouseup',()=>cur.classList.remove('clicking'));
+  document.querySelectorAll('a,button,.ev-card,.social-card,.g-slide,.nav-cta').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cur.classList.add('hovering'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('hovering'));
+  });
+  (function loop(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;dx+=(mx-dx)*.65;dy+=(my-dy)*.65;cur.style.left=cx+'px';cur.style.top=cy+'px';dot.style.left=dx+'px';dot.style.top=dy+'px';requestAnimationFrame(loop)})();
+
+  // 2. WORD SWAP
+  const words=['RAID','COMMUNITY DAY','SPECIAL EVENT','TEAM BATTLE','POGO SARABURI'];
+  let wi=0;const sw=document.getElementById('swapWord');
+  if(sw){sw.style.transition='opacity .35s ease,transform .35s ease';setInterval(()=>{sw.style.opacity='0';sw.style.transform='translateY(-10px)';setTimeout(()=>{wi=(wi+1)%words.length;sw.textContent=words[wi];sw.style.opacity='1';sw.style.transform='translateY(0)'},350)},2800)}
+
+  // 3. SWIPER — ตรงกับ Co&Co source code จริง
+  if(typeof Swiper!=='undefined'){
+    // Marquee: slidesPerView:'auto', speed:25000, delay:0 แบบ Co&Co pageBlockticker
+    new Swiper('#swiperMarquee',{slidesPerView:'auto',spaceBetween:0,loop:true,centeredSlides:true,speed:25000,grabCursor:false,allowTouchMove:false,autoplay:{delay:0,disableOnInteraction:false}});
+    // Gallery: grabCursor:true แบบ Co&Co carousel
+    new Swiper('#swiperGallery',{slidesPerView:'auto',spaceBetween:24,grabCursor:true,loop:false,freeMode:{enabled:true,sticky:false},breakpoints:{320:{slidesPerView:1.3,spaceBetween:16},640:{slidesPerView:2.1,spaceBetween:20},1024:{slidesPerView:3.1,spaceBetween:24},1280:{slidesPerView:3.5,spaceBetween:24}}});
+    // Big CTA: speed:50000, delay:false แบบ Co&Co footerCta จริง
+    new Swiper('#swiperBigCta',{slidesPerView:'auto',spaceBetween:0,loop:true,speed:50000,grabCursor:false,allowTouchMove:false,autoplay:{delay:false,disableOnInteraction:false}});
+  }
+
+  // 4. GSAP — รอ defer โหลด
+  function initG(){
+    if(typeof gsap==='undefined'){setTimeout(initG,80);return}
+    // Aurora orbs float (GSAP smooth กว่า CSS)
+    gsap.to('.orb1',{x:50,y:30,scale:1.12,duration:12,repeat:-1,yoyo:true,ease:'sine.inOut'});
+    gsap.to('.orb2',{x:-35,y:-25,scale:1.1,duration:15,repeat:-1,yoyo:true,ease:'sine.inOut',delay:3});
+    gsap.to('.orb3',{x:25,y:45,scale:1.15,duration:18,repeat:-1,yoyo:true,ease:'sine.inOut',delay:7});
+    // Hero entrance
+    gsap.from('.hero-h1 .l1',{opacity:0,y:40,duration:1.1,ease:'power3.out',delay:.2});
+    gsap.from('.hero-h1 .l2',{opacity:0,y:40,duration:1.1,ease:'power3.out',delay:.4});
+    gsap.from('.hero-eye',{opacity:0,x:-20,duration:.8,ease:'power2.out',delay:.1});
+    gsap.from('.hero-desc',{opacity:0,y:20,duration:.9,ease:'power2.out',delay:.6});
+    gsap.from('.hero-ctas',{opacity:0,y:20,duration:.9,ease:'power2.out',delay:.75});
+    gsap.from('.beacon',{opacity:0,scale:.85,duration:1.2,ease:'power3.out',delay:.3});
+    // Scroll reveals
+    document.querySelectorAll('.ev-card,.social-card,.stat').forEach((el,i)=>{
+      gsap.set(el,{opacity:0,y:32});
+      new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)gsap.to(el,{opacity:1,y:0,duration:.65,delay:(i%4)*.08,ease:'power2.out'})})},{threshold:.15}).observe(el);
+    });
+    document.querySelectorAll('.s-title,.s-eye,.s-sub').forEach((el,i)=>{
+      gsap.set(el,{opacity:0,y:18});
+      new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)gsap.to(el,{opacity:1,y:0,duration:.75,delay:i*.03,ease:'power3.out'})})},{threshold:.2}).observe(el);
+    });
+    // Big CTA color — แบบ Co&Co footerCta GSAP color change จริง
+    new IntersectionObserver(en=>{en.forEach(e=>{gsap.to('.big-cta-item',{color:e.isIntersecting?'rgba(255,215,0,.22)':'rgba(255,215,0,.06)',duration:.8,ease:'power2.out'})})},{threshold:.2}).observe(document.querySelector('.big-cta-wrap')||document.body);
+  }
+  initG();
+
+  // 5. STICKY STEPS
+  const steps=document.querySelectorAll('.step');
+  new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){steps.forEach(s=>s.classList.remove('active'));e.target.classList.add('active')}})},{threshold:.55,rootMargin:'-15% 0px -15% 0px'}).observe;
+  steps.forEach(s=>new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){steps.forEach(x=>x.classList.remove('active'));e.target.classList.add('active')}})},{threshold:.55,rootMargin:'-15% 0px -15% 0px'}).observe(s));
+});
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Pokemon GO Saraburi","url":"https://pogosaraburi.com","description":"กลุ่ม Pokemon GO จังหวัดสระบุรี","areaServed":{"@type":"Place","name":"สระบุรี"},"sameAs":["https://www.facebook.com/groups/pokemongosaraburi"]}</script>
 </body>
-  </html>
+</html>
