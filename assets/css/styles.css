@@ -1,5 +1,5 @@
 /*
- * POGO SARABURI - STYLES v5.0 (Glassmorphism + Dynamic Teams)
+ * POGO SARABURI - STYLES v5.1 (Live Countdown)
  */
 :root{
   --ink:#07070E;
@@ -19,13 +19,12 @@
   --purple:#9B5FFF;
   --white:#F2F2FF;
   --dim:rgba(255,255,255,.38);
-  --border:rgba(255,255,255,.08); /* ปรับกรอบให้เป็นสีขาวใสๆ เข้ากับกระจก */
+  --border:rgba(255,255,255,.08); 
   --font-display:'Orbitron',monospace;
   --font-body:'Sarabun',sans-serif;
   --ease-out:cubic-bezier(0.16,1,0.3,1)
 }
 
-/* ตั้งค่าให้เปลี่ยนสีตัวแปรเมื่อคลิกเลือกทีม */
 [data-team="mystic"] { --theme-color: var(--mystic); --theme-glow: rgba(0,180,255,.3); }
 [data-team="valor"] { --theme-color: var(--valor); --theme-glow: rgba(255,59,59,.3); }
 [data-team="instinct"] { --theme-color: var(--instinct); --theme-glow: rgba(255,215,0,.3); }
@@ -128,12 +127,6 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .badge-raid{background:rgba(255,59,59,.1);color:var(--red);border:1px solid rgba(255,59,59,.2)}
 .badge-cd{background:rgba(255,215,0,.09);color:var(--instinct);border:1px solid rgba(255,215,0,.2)}
 .badge-special{background:rgba(155,95,255,.1);color:var(--purple);border:1px solid rgba(155,95,255,.2)}
-.badge-live{width:5px;height:5px;border-radius:50%;background:currentColor;animation:liveBlink 2s ease-in-out infinite}
-@keyframes liveBlink{0%,100%{opacity:1}50%{opacity:.2}}
-.event-title{font-size:1.05rem;font-weight:600;color:var(--white);flex:1}
-.event-date{font-family:var(--font-display);font-size:.6rem;color:var(--dim);letter-spacing:.1em;flex-shrink:0}
-.event-arrow{color:var(--theme-color);opacity:0.5;font-size:1rem;flex-shrink:0;transition:opacity .2s,transform .2s, color 0.4s;}
-.event-row:hover .event-arrow{opacity:1;transform:translateX(4px)}
 .gallery-swiper{overflow:hidden;padding:2rem 0 3rem}
 .gallery-swiper .swiper-wrapper{align-items:center;padding:1rem 0}
 .gallery-slide{width:320px!important;height:220px;border-radius:16px;overflow:hidden;border:1px solid var(--border);position:relative;transform:rotate(-1.5deg);transition:transform .4s var(--ease-out),border-color .3s, box-shadow .3s;flex-shrink:0}
@@ -173,38 +166,33 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .footer-social a:hover{color:var(--theme-color)}
 .footer-dis{font-size:.72rem;color:rgba(255,255,255,.15);text-align:center;padding-top:20px;border-top:1px solid var(--border);margin-top:20px}
 
-/* =========================================
-   สไตล์ใหม่ที่เพิ่มมา: ปุ่มเลือกทีม และ กระจก
-========================================= */
-.team-btn {
-  padding: 8px 16px; 
-  border-radius: 30px; 
-  font-family: var(--font-display); 
-  font-weight: 700;
-  font-size: 0.65rem; 
-  cursor: none; 
-  background: rgba(255,255,255,0.05); 
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--white); 
-  transition: all 0.3s ease;
-}
+/* ระบบเลือกทีม */
+.team-btn { padding: 8px 16px; border-radius: 30px; font-family: var(--font-display); font-weight: 700; font-size: 0.65rem; cursor: none; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--white); transition: all 0.3s ease; }
 .team-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
 .team-btn.active.mystic { background: var(--mystic); color: #000; border-color: var(--mystic); box-shadow: 0 0 15px rgba(0,180,255,0.4); }
 .team-btn.active.valor { background: var(--valor); color: #000; border-color: var(--valor); box-shadow: 0 0 15px rgba(255,59,59,0.4); }
 .team-btn.active.instinct { background: var(--instinct); color: #000; border-color: var(--instinct); box-shadow: 0 0 15px rgba(255,215,0,0.4); }
 
-.glass-panel {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
-}
-.glass-panel:hover {
-  border-color: rgba(255,255,255,0.15);
-}
+.glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease; }
+.glass-panel:hover { border-color: rgba(255,255,255,0.15); }
 
-@media(max-width:768px){.site-header{padding:0 20px}.nav-links{display:none}.hero{padding:5rem 20px 3rem}.hero-line:nth-child(1) .hero-line-inner,.hero-line:nth-child(2) .hero-line-inner{font-size:clamp(3.5rem,16vw,5.5rem)}.hero-line--sub .hero-line-inner{font-size:clamp(1.2rem,6vw,1.8rem)}.hero-bg-txt{display:none}.hero-bottom{flex-direction:column;align-items:flex-start;gap:24px}.hero-actions{align-items:flex-start}.hero-beacon-wrap{display:none}.scroll-indicator{left:20px}.container{padding:0 20px}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2)::after{display:none}.event-row{flex-wrap:wrap;gap:10px}.event-date{display:none}.steps-layout{grid-template-columns:1fr;gap:2rem}.steps-sticky{position:static}.social-grid-felix{grid-template-columns:1fr 1fr}.bcf-line{font-size:clamp(2.5rem,10vw,4.5rem)}.bcf-bottom{flex-direction:column;align-items:flex-start}.site-footer{padding:32px 20px}.footer-row{flex-direction:column;text-align:center}.footer-social{justify-content:center}}
-@media(max-width:480px){.social-grid-felix{grid-template-columns:1fr}.hero-actions{flex-direction:column}.sif-handle{font-size:1.1rem}}
+/* =========================================
+   สไตล์ใหม่ Step 3: Live Countdown
+========================================= */
+.event-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: stretch; margin-top: 20px; }
+.countdown-card { padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 20px; border-color: var(--theme-color); box-shadow: 0 0 40px rgba(0,0,0,0.5); position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.6) 100%); }
+.countdown-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--theme-color); box-shadow: 0 0 25px var(--theme-glow); transition: background 0.4s, box-shadow 0.4s; }
+.cd-header { margin-bottom: 5px; }
+.live-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 59, 59, 0.15); color: var(--red); padding: 6px 16px; border-radius: 30px; font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; border: 1px solid rgba(255, 59, 59, 0.3); margin-bottom: 15px; animation: glowBlink 2s infinite; }
+.badge-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); }
+@keyframes glowBlink { 0%, 100% { box-shadow: 0 0 0 rgba(255,59,59,0); } 50% { box-shadow: 0 0 15px rgba(255,59,59,0.4); } }
+.cd-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.cd-subtitle { color: var(--dim); font-size: 0.95rem; }
+.cd-timer { display: flex; justify-content: center; align-items: flex-start; gap: 15px; margin-bottom: 15px; }
+.time-box { display: flex; flex-direction: column; align-items: center; width: 70px; background: rgba(0,0,0,0.4); padding: 15px 5px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+.time-val { font-family: var(--font-display); font-size: 2.8rem; font-weight: 900; color: var(--theme-color); text-shadow: 0 0 20px var(--theme-glow); line-height: 1; transition: color 0.4s, text-shadow 0.4s; }
+.time-lbl { font-family: var(--font-display); font-size: 0.6rem; color: var(--white); opacity: 0.6; letter-spacing: 0.15em; margin-top: 8px; }
+.time-sep { font-family: var(--font-display); font-size: 2.5rem; color: var(--dim); font-weight: 700; padding-top: 10px; }
+
+@media(max-width:768px){.site-header{padding:0 20px}.nav-links{display:none}.hero{padding:5rem 20px 3rem}.hero-line:nth-child(1) .hero-line-inner,.hero-line:nth-child(2) .hero-line-inner{font-size:clamp(3.5rem,16vw,5.5rem)}.hero-line--sub .hero-line-inner{font-size:clamp(1.2rem,6vw,1.8rem)}.hero-bg-txt{display:none}.hero-bottom{flex-direction:column;align-items:flex-start;gap:24px}.hero-actions{align-items:flex-start}.hero-beacon-wrap{display:none}.scroll-indicator{left:20px}.container{padding:0 20px}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2)::after{display:none}.event-row{flex-wrap:wrap;gap:10px}.event-date{display:none}.steps-layout{grid-template-columns:1fr;gap:2rem}.steps-sticky{position:static}.social-grid-felix{grid-template-columns:1fr 1fr}.bcf-line{font-size:clamp(2.5rem,10vw,4.5rem)}.bcf-bottom{flex-direction:column;align-items:flex-start}.site-footer{padding:32px 20px}.footer-row{flex-direction:column;text-align:center}.footer-social{justify-content:center}.event-showcase{grid-template-columns: 1fr;}}
+@media(max-width:480px){.social-grid-felix{grid-template-columns:1fr}.hero-actions{flex-direction:column}.sif-handle{font-size:1.1rem}.cd-timer{gap: 5px;}.time-box{width: 55px;}.time-val{font-size: 2rem;}}
