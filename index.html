@@ -15,12 +15,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Pokemon GO Saraburi","url":"https://pogosaraburi.com","description":"กลุ่ม Pokemon GO จังหวัดสระบุรี","areaServed":{"@type":"Place","name":"สระบุรี"},"sameAs":["https://www.facebook.com/share/18wuZwxUEF/"]}</script>
+  <script>
+    const savedTeam = localStorage.getItem('pogo_team') || 'instinct';
+    document.documentElement.setAttribute('data-team', savedTeam);
+  </script>
 </head>
 <body class="loading">
   <div class="cursor" id="cursor"></div>
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="side-label">POGOSARABURI.COM &nbsp;·&nbsp; กลุ่ม POKEMON GO สระบุรี</div>
+  
   <div class="preloader" id="preloader">
     <div class="preloader-text">POKEMON GO SARABURI</div>
     <div class="preloader-ball">
@@ -31,6 +35,7 @@
       </div>
     </div>
   </div>
+  
   <div id="header-placeholder"></div>
   <main>
     <section class="hero">
@@ -47,15 +52,26 @@
           <div class="hero-eyebrow">POKEMON GO · จังหวัดสระบุรี · THAILAND</div>
           <div class="hero-title">
             <div class="hero-line"><span class="hero-line-inner" id="heroL1">รวมทีม</span></div>
-            <div class="hero-line"><span class="hero-line-inner" id="heroL2">สระบุรี</span></div>
+            <div class="hero-line"><span class="hero-line-inner" id="heroL2" style="color: var(--theme-color); text-shadow: 0 0 120px var(--theme-glow);">สระบุรี</span></div>
             <div class="hero-line hero-line--sub"><span class="hero-line-inner" id="heroL3">POGO SARABURI</span></div>
           </div>
         </div>
         <div class="hero-bottom">
           <p class="hero-desc">กลุ่มผู้เล่น Pokemon GO จังหวัดสระบุรี รวมตัว Raid, Community Day และกิจกรรมพิเศษ ยินดีต้อนรับทุกทีม ทุกระดับ ทุกช่วงวัย</p>
           <div class="hero-actions">
-            <a class="btn-primary" href="#join"><span class="btn-primary-icon">↗</span>เข้าร่วมตอนนี้</a>
-            <a class="btn-ghost" href="#events">ดูกิจกรรม →</a>
+            <div class="team-selector glass-panel" style="padding: 15px 25px; margin-bottom: 20px;">
+              <span style="font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--dim); display: block; margin-bottom: 10px;">SELECT YOUR TEAM</span>
+              <div style="display: flex; gap: 10px;">
+                <button class="team-btn mystic" onclick="changeTeam('mystic')">MYSTIC</button>
+                <button class="team-btn valor" onclick="changeTeam('valor')">VALOR</button>
+                <button class="team-btn instinct" onclick="changeTeam('instinct')">INSTINCT</button>
+              </div>
+            </div>
+            
+            <div style="display: flex; gap: 0.8rem;">
+              <a class="btn-primary" href="#join"><span class="btn-primary-icon">↗</span>เข้าร่วมตอนนี้</a>
+              <a class="btn-ghost" href="#events">ดูกิจกรรม →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -74,6 +90,7 @@
         </div>
       </div>
     </section>
+    
     <div class="marquee-wrap">
       <div class="swiper marquee-swiper" id="swiperMarquee">
         <div class="swiper-wrapper">
@@ -82,29 +99,32 @@
         </div>
       </div>
     </div>
-    <section class="stats-section">
+    
+    <section class="stats-section glass-section">
       <div class="container">
         <div class="stats-grid">
-          <div class="stat-item"><span class="stat-number">500+</span><span class="stat-label">สมาชิกกลุ่ม</span></div>
-          <div class="stat-item"><span class="stat-number">3 ทีม</span><span class="stat-label">MYSTIC · VALOR · INSTINCT</span></div>
-          <div class="stat-item"><span class="stat-number">LV.40+</span><span class="stat-label">เทรนเนอร์ระดับสูง</span></div>
-          <div class="stat-item"><span class="stat-number">ทุกอาทิตย์</span><span class="stat-label">กิจกรรม RAID</span></div>
+          <div class="stat-item glass-panel"><span class="stat-number">500+</span><span class="stat-label">สมาชิกกลุ่ม</span></div>
+          <div class="stat-item glass-panel"><span class="stat-number">3 ทีม</span><span class="stat-label">MYSTIC · VALOR · INSTINCT</span></div>
+          <div class="stat-item glass-panel"><span class="stat-number">LV.40+</span><span class="stat-label">เทรนเนอร์ระดับสูง</span></div>
+          <div class="stat-item glass-panel"><span class="stat-number">ทุกอาทิตย์</span><span class="stat-label">กิจกรรม RAID</span></div>
         </div>
       </div>
     </section>
+    
     <section class="sec sec--dark" id="events">
       <div class="container">
         <div class="reveal-line"></div>
         <div class="sec-header">
           <div><span class="section-label">— กิจกรรมล่าสุด</span><h2 class="section-title">กิจกรรม</h2></div>
         </div>
-        <div class="event-list">
+        <div class="event-list glass-panel" style="padding: 20px 40px;">
           <div class="event-row"><div class="event-num">01</div><div class="event-badge badge-cd"><span class="badge-live"></span>COMMUNITY DAY</div><div class="event-title">Community Day เดือนนี้</div><div class="event-date">อัพเดตเร็วๆ นี้</div><div class="event-arrow">→</div></div>
           <div class="event-row"><div class="event-num">02</div><div class="event-badge badge-raid"><span class="badge-live"></span>RAID HOUR</div><div class="event-title">Raid Hour ประจำสัปดาห์</div><div class="event-date">ทุกวันพุธ · 18:00</div><div class="event-arrow">→</div></div>
           <div class="event-row"><div class="event-num">03</div><div class="event-badge badge-special"><span class="badge-live"></span>SPECIAL EVENT</div><div class="event-title">กิจกรรมพิเศษ</div><div class="event-date">อัพเดตเร็วๆ นี้</div><div class="event-arrow">→</div></div>
         </div>
       </div>
     </section>
+
     <section class="sec sec--mid" id="gallery">
       <div class="container">
         <div class="reveal-line"></div>
@@ -123,6 +143,7 @@
         </div>
       </div>
     </section>
+
     <section class="sec sec--accent" id="join-steps">
       <div class="container">
         <div class="steps-layout">
@@ -134,19 +155,20 @@
             <a class="btn-primary" href="https://www.facebook.com/share/g/1DQUFR5M1h/" target="_blank" rel="noopener" style="display:inline-flex;width:fit-content"><span class="btn-primary-icon">↗</span>เข้าร่วมเลย</a>
           </div>
           <div class="steps-list">
-            <div class="step active" data-step="0"><div class="step-icon">📘</div><div class="step-num">STEP 01</div><div class="step-title">เข้าร่วม Facebook Group</div><p class="step-desc">ค้นหา "Pokemon GO Saraburi" ใน Facebook แล้วกด Request to join</p></div>
-            <div class="step" data-step="1"><div class="step-icon">💬</div><div class="step-num">STEP 02</div><div class="step-title">แนะนำตัวในกลุ่ม</div><p class="step-desc">โพสต์แนะนำตัว บอก Trainer Name, ทีม และ Level ของคุณ</p></div>
-            <div class="step" data-step="2"><div class="step-icon">⚔️</div><div class="step-num">STEP 03</div><div class="step-title">ร่วม Raid ครั้งแรก</div><p class="step-desc">ติดตามโพสต์นัดหมาย Raid ในกลุ่ม มาร่วมสนุกกับเพื่อนๆ สระบุรี</p></div>
+            <div class="step glass-panel active" data-step="0"><div class="step-icon">📘</div><div class="step-num">STEP 01</div><div class="step-title">เข้าร่วม Facebook Group</div><p class="step-desc">ค้นหา "Pokemon GO Saraburi" ใน Facebook แล้วกด Request to join</p></div>
+            <div class="step glass-panel" data-step="1"><div class="step-icon">💬</div><div class="step-num">STEP 02</div><div class="step-title">แนะนำตัวในกลุ่ม</div><p class="step-desc">โพสต์แนะนำตัว บอก Trainer Name, ทีม และ Level ของคุณ</p></div>
+            <div class="step glass-panel" data-step="2"><div class="step-icon">⚔️</div><div class="step-num">STEP 03</div><div class="step-title">ร่วม Raid ครั้งแรก</div><p class="step-desc">ติดตามโพสต์นัดหมาย Raid ในกลุ่ม มาร่วมสนุกกับเพื่อนๆ สระบุรี</p></div>
           </div>
         </div>
       </div>
     </section>
+
     <section class="sec sec--dark" id="social">
       <div class="container">
         <div class="reveal-line"></div>
         <span class="section-label">— ติดตามเรา</span>
         <h2 class="section-title">ช่องทางโซเชียล</h2>
-        <div class="social-grid-felix">
+        <div class="social-grid-felix glass-panel" style="padding: 0; overflow: hidden;">
           <a class="social-item-felix" href="https://www.facebook.com/share/18wuZwxUEF/" target="_blank" rel="noopener"><div class="sif-platform">Facebook Page</div><div class="sif-handle">Pokegosaraburi</div><div class="sif-tag">ช่องทางหลัก →</div></a>
           <a class="social-item-felix" href="https://www.facebook.com/share/g/1DQUFR5M1h/" target="_blank" rel="noopener"><div class="sif-platform">Facebook Group</div><div class="sif-handle">Pokemon GO Saraburi</div><div class="sif-tag">นัดหมาย Raid →</div></a>
           <a class="social-item-felix" href="https://www.instagram.com/pokemongosaraburi" target="_blank" rel="noopener"><div class="sif-platform">Instagram</div><div class="sif-handle">@pokemongosaraburi</div><div class="sif-tag">รูปกิจกรรม →</div></a>
@@ -156,11 +178,12 @@
         </div>
       </div>
     </section>
+
     <section class="big-cta-felix" id="join">
       <div class="container">
         <div class="bcf-lines">
           <div class="bcf-line">ออกล่าด้วยกัน</div>
-          <div class="bcf-line gold">POGO SARABURI</div>
+          <div class="bcf-line gold" style="color: var(--theme-color); opacity: 0.2;">POGO SARABURI</div>
         </div>
         <div class="bcf-bottom">
           <p class="bcf-desc">เข้าร่วมกลุ่ม Pokemon GO Saraburi วันนี้ ฟรี ไม่มีค่าใช้จ่าย</p>
@@ -172,10 +195,31 @@
       </div>
     </section>
   </main>
+  
   <div id="footer-placeholder"></div>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
   <script src="/assets/js/components.js"></script>
   <script src="/assets/js/main.js"></script>
+  
+  <script>
+    function changeTeam(teamName) {
+      document.documentElement.setAttribute('data-team', teamName);
+      localStorage.setItem('pogo_team', teamName);
+      updateActiveButton(teamName);
+    }
+    
+    function updateActiveButton(teamName) {
+      document.querySelectorAll('.team-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector(`.team-btn.${teamName}`);
+      if(activeBtn) activeBtn.classList.add('active');
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentTeam = document.documentElement.getAttribute('data-team') || 'instinct';
+      updateActiveButton(currentTeam);
+    });
+  </script>
 </body>
 </html>
