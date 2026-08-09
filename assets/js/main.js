@@ -1,5 +1,5 @@
 /**
- * POGO SARABURI - MAIN JS (v5.1 - Lenis + GSAP + Live Countdown)
+ * POGO SARABURI - MAIN JS (v5.2 - Cinematic Gallery)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 4. LIVE RAID COUNTDOWN (นับถอยหลังสู่วันพุธ 18:00)
+  // 4. LIVE RAID COUNTDOWN
   // ==========================================
   function initCountdown() {
     const elDays = document.getElementById('cd-days');
@@ -75,19 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function getNextRaidHour() {
       const now = new Date();
       const targetDate = new Date(now.getTime());
-      
-      const targetDay = 3; // 3 = วันพุธ
+      const targetDay = 3; 
       const currentDay = now.getDay();
-      
       let daysUntil = (targetDay - currentDay + 7) % 7;
-      
-      // ถ้าวันนี้เป็นวันพุธ และเลยเวลา 18:00 ไปแล้ว ให้นับเป็นวันพุธหน้า
-      if (daysUntil === 0 && now.getHours() >= 18) {
-        daysUntil = 7;
-      }
-      
+      if (daysUntil === 0 && now.getHours() >= 18) daysUntil = 7;
       targetDate.setDate(now.getDate() + daysUntil);
-      targetDate.setHours(18, 0, 0, 0); // ตั้งเวลา 18:00:00
+      targetDate.setHours(18, 0, 0, 0);
       return targetDate.getTime();
     }
 
@@ -113,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
       elSecs.innerText = s.toString().padStart(2, '0');
     }, 1000);
   }
-  
   initCountdown();
 
   // ==========================================
@@ -133,7 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorX += (mouseX - cursorX) * 0.15; cursorY += (mouseY - cursorY) * 0.15;
       cursor.style.left = `${cursorX}px`; cursor.style.top = `${cursorY}px`;
     });
-    const interactables = document.querySelectorAll('a, button, .team-btn, .event-row, .gallery-slide');
+    
+    // อัปเดต Hover Effect ให้รองรับรูปแกลเลอรีด้วย
+    const interactables = document.querySelectorAll('a, button, .team-btn, .event-row, .gallery-img, .lightbox-close, .lightbox-bg');
     interactables.forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
@@ -166,5 +160,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
   document.querySelectorAll('.will-reveal, .reveal-line').forEach(el => observer.observe(el));
+
+  // ==========================================
+  // 8. CINEMATIC LIGHTBOX (ซูมภาพแกลเลอรี)
+  // ==========================================
+  const lightbox = document.getElementById('lightbox');
+  const lightboxBg = document.getElementById('lightboxBg');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxContent = document.querySelector('.lightbox-content');
+  const galleryImages = document.querySelectorAll('.gallery-img');
+
+  if(lightbox) {
+    galleryImages.forEach(img => {
+      img.addEventListener('click', (e) => {
+        // ดึง src และ caption จากรูปที่กด
+        const src = e.target.src;
+        const caption = e.target.getAttribute('data-caption') || 'POGO SARABURI';
+
+        lightboxImg.src = src;
+        lightboxCaption.innerText = caption;
+
+        // เปิดโหมด Lightbox และหยุด Scroll หน้าเว็บ
+        lightbox.classList.add('active');
+        lenis.stop(); 
+
+        // GSAP Animation ขยายภาพขึ้นมาแบบล้ำๆ
+        gsap.to(lightboxBg, { opacity: 1, duration: 0.4, ease: "power2.out" });
+        gsap.to(lightboxContent, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.2)", delay: 0.1 });
+        gsap.to(lightboxClose, { opacity: 1, duration: 0.3, delay: 0.4 });
+      });
+    });
+
+    function closeLightbox() {
+      // GSAP Animation หดภาพกลับ
+      gsap.to([lightboxContent, lightboxClose], { opacity: 0, scale: 0.95, y: 10, duration: 0.3, ease: "power2.in" });
+      gsap.to(lightboxBg, { opacity: 0, duration: 0.4, delay: 0.1, ease: "power2.in", onComplete: () => {
+        lightbox.classList.remove('active');
+        // เปิด Scroll หน้าเว็บให้เลื่อนได้ปกติ
+        lenis.start(); 
+      }});
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxBg.addEventListener('click', closeLightbox); // คลิกพื้นหลังสีดำเพื่อปิดได้ด้วย
+  }
 
 });
