@@ -117,12 +117,41 @@
       <div class="container">
         <div class="reveal-line"></div>
         <div class="sec-header will-reveal">
-          <div><span class="section-label">— กิจกรรมล่าสุด</span><h2 class="section-title">กิจกรรม</h2></div>
+          <div><span class="section-label">— กำหนดการล่าสุด</span><h2 class="section-title">นัดหมายกิจกรรม</h2></div>
         </div>
-        <div class="event-list glass-panel will-reveal" style="padding: 20px 40px;">
-          <div class="event-row"><div class="event-num">01</div><div class="event-badge badge-cd"><span class="badge-live"></span>COMMUNITY DAY</div><div class="event-title">Community Day เดือนนี้</div><div class="event-date">อัพเดตเร็วๆ นี้</div><div class="event-arrow">→</div></div>
-          <div class="event-row"><div class="event-num">02</div><div class="event-badge badge-raid"><span class="badge-live"></span>RAID HOUR</div><div class="event-title">Raid Hour ประจำสัปดาห์</div><div class="event-date">ทุกวันพุธ · 18:00</div><div class="event-arrow">→</div></div>
-          <div class="event-row"><div class="event-num">03</div><div class="event-badge badge-special"><span class="badge-live"></span>SPECIAL EVENT</div><div class="event-title">กิจกรรมพิเศษ</div><div class="event-date">อัพเดตเร็วๆ นี้</div><div class="event-arrow">→</div></div>
+        
+        <div class="event-showcase">
+          <div class="countdown-card glass-panel will-reveal">
+            <div class="cd-header">
+              <span class="live-badge"><span class="badge-live-dot"></span>UPCOMING RAID</span>
+              <h3 class="cd-title">Raid Hour ประจำสัปดาห์</h3>
+              <p class="cd-subtitle">สถานที่: หอนาฬิกา สระบุรี</p>
+            </div>
+            <div class="cd-timer" id="raid-countdown">
+              <div class="time-box"><span class="time-val" id="cd-days">00</span><span class="time-lbl">DAYS</span></div><span class="time-sep">:</span>
+              <div class="time-box"><span class="time-val" id="cd-hours">00</span><span class="time-lbl">HRS</span></div><span class="time-sep">:</span>
+              <div class="time-box"><span class="time-val" id="cd-mins">00</span><span class="time-lbl">MIN</span></div><span class="time-sep">:</span>
+              <div class="time-box"><span class="time-val" id="cd-secs">00</span><span class="time-lbl">SEC</span></div>
+            </div>
+            <a href="https://www.facebook.com/share/g/1DQUFR5M1h/" target="_blank" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+              <span class="btn-primary-icon" style="background: transparent; font-size: 1.2rem;">⚔️</span> เตรียมจัดทีมรอเลย
+            </a>
+          </div>
+
+          <div class="event-list glass-panel will-reveal" style="padding: 20px 40px; justify-content: center; display: flex; flex-direction: column;">
+            <div class="event-row">
+              <div class="event-num">01</div><div class="event-badge badge-cd">COMMUNITY DAY</div>
+              <div class="event-title">Community Day เดือนนี้</div><div class="event-date">รอกำหนดการ</div><div class="event-arrow">→</div>
+            </div>
+            <div class="event-row">
+              <div class="event-num">02</div><div class="event-badge badge-special">SPECIAL EVENT</div>
+              <div class="event-title">กิจกรรมพิเศษ Niantic</div><div class="event-date">รอกำหนดการ</div><div class="event-arrow">→</div>
+            </div>
+            <div class="event-row">
+              <div class="event-num">03</div><div class="event-badge badge-raid" style="border-color: rgba(255,255,255,0.2); color: #fff;">PVP BATTLE</div>
+              <div class="event-title">Saraburi League (เร็วๆ นี้)</div><div class="event-date">กำลังจัดเตรียม</div><div class="event-arrow">→</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -209,7 +238,6 @@
   <script src="/assets/js/main.js"></script>
   
   <script>
-    // สคริปต์เปลี่ยนสีตามทีม (ของเก่า)
     function changeTeam(teamName) {
       document.documentElement.setAttribute('data-team', teamName);
       localStorage.setItem('pogo_team', teamName);
