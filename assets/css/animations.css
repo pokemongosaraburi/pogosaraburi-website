@@ -1,0 +1,27 @@
+/*
+ * POGO SARABURI — ANIMATIONS & PRELOADER
+ * VERSION: 4.0
+ * LOCKED — อย่าแก้ Preloader sequence
+ */
+
+v4.0 - Add assets/css/animations.css
+/* PRELOADER */
+.preloader{position:fixed;inset:0;background:#07070E;display:flex;align-items:center;justify-content:center;z-index:99999}
+
+/* Layer 1: Text */
+.preloader-text{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:clamp(1rem,2.5vw,1.6rem);font-weight:700;letter-spacing:.3em;color:rgba(255,215,0,.7);z-index:100001;opacity:0;transform:translateY(12px);pointer-events:none;text-align:center}
+
+/* Layer 2: Pokeball */
+.preloader-ball{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100002;opacity:0;pointer-events:none}
+
+.preloader-pokeball{width:120px;height:120px;border-radius:50%;position:relative;overflow:hidden;border:3px solid rgba(255,215,0,.4);box-shadow:0 0 40px rgba(255,215,0,.2),0 0 80px rgba(255,215,0,.08);transform-origin:center center}
+.preloader-pokeball .pl-top{position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(135deg,#CC1818 0%,#FF3B3B 100%)}
+.preloader-pokeball .pl-bot{position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(135deg,#141420 0%,#07070E 100%)}
+.preloader-pokeball .pl-band{position:absolute;top:50%;left:0;right:0;height:10px;background:rgba(255,215,0,.8);transform:translateY(-50%);z-index:2}
+.preloader-pokeball .pl-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:50%;background:#07070E;border:3px solid rgba(255,215,0,.6);z-index:3}
+.preloader-pokeball .pl-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:rgba(0,180,255,.5);z-index:4;box-shadow:0 0 12px rgba(0,180,255,.5)}
+.preloader-pokeball .pl-glare{position:absolute;top:14px;left:24px;width:20px;height:11px;border-radius:50%;background:rgba(255,255,255,.22);z-index:5}
+
+/* 3D CHARS */
+.char{display:inline-block;backface-visibility:hidden;will-change:transform,opacity}
+.char-group{perspective:1200px;display:inline-block}
