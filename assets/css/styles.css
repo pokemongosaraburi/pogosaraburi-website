@@ -1,28 +1,12 @@
 /*
- * POGO SARABURI - STYLES v5.1 (Live Countdown)
+ * POGO SARABURI - STYLES v5.2 (Cinematic Gallery & Lightbox)
  */
 :root{
-  --ink:#07070E;
-  --ink2:#0D0D1A;
-  --card:#0f0f1a;
-  --card2:#161628;
-  
-  /* ตัวแปรสีประจำทีม */
-  --mystic:#00B4FF;
-  --valor:#FF3B3B;
-  --instinct:#FFD700;
-  
-  /* สีหลักที่จะถูกเปลี่ยนด้วย JS (Default คือ Instinct) */
-  --theme-color: var(--instinct);
-  --theme-glow: rgba(255,215,0,.3);
-  
-  --purple:#9B5FFF;
-  --white:#F2F2FF;
-  --dim:rgba(255,255,255,.38);
-  --border:rgba(255,255,255,.08); 
-  --font-display:'Orbitron',monospace;
-  --font-body:'Sarabun',sans-serif;
-  --ease-out:cubic-bezier(0.16,1,0.3,1)
+  --ink:#07070E; --ink2:#0D0D1A; --card:#0f0f1a; --card2:#161628;
+  --mystic:#00B4FF; --valor:#FF3B3B; --instinct:#FFD700;
+  --theme-color: var(--instinct); --theme-glow: rgba(255,215,0,.3);
+  --purple:#9B5FFF; --white:#F2F2FF; --dim:rgba(255,255,255,.38); --border:rgba(255,255,255,.08); 
+  --font-display:'Orbitron',monospace; --font-body:'Sarabun',sans-serif; --ease-out:cubic-bezier(0.16,1,0.3,1)
 }
 
 [data-team="mystic"] { --theme-color: var(--mystic); --theme-glow: rgba(0,180,255,.3); }
@@ -127,13 +111,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .badge-raid{background:rgba(255,59,59,.1);color:var(--red);border:1px solid rgba(255,59,59,.2)}
 .badge-cd{background:rgba(255,215,0,.09);color:var(--instinct);border:1px solid rgba(255,215,0,.2)}
 .badge-special{background:rgba(155,95,255,.1);color:var(--purple);border:1px solid rgba(155,95,255,.2)}
-.gallery-swiper{overflow:hidden;padding:2rem 0 3rem}
-.gallery-swiper .swiper-wrapper{align-items:center;padding:1rem 0}
-.gallery-slide{width:320px!important;height:220px;border-radius:16px;overflow:hidden;border:1px solid var(--border);position:relative;transform:rotate(-1.5deg);transition:transform .4s var(--ease-out),border-color .3s, box-shadow .3s;flex-shrink:0}
-.gallery-slide:nth-child(even){transform:rotate(1.5deg)}.gallery-slide:hover{transform:rotate(0deg) scale(1.04)!important;border-color:var(--theme-color); box-shadow: 0 10px 30px var(--theme-glow);}
-.gallery-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,var(--card) 0%,rgba(255,255,255,.02) 100%)}
-.gallery-ph-icon{font-size:2.8rem;opacity:.35}.gallery-ph-txt{font-family:var(--font-display);font-size:.6rem;color:var(--dim);letter-spacing:.18em}
-.gallery-label{position:absolute;bottom:0;left:0;right:0;padding:.8rem 1.1rem;background:linear-gradient(to top,rgba(7,7,14,.95) 0%,transparent 100%);font-size:.85rem;color:var(--white);font-weight:700}
+
 .steps-layout{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
 .steps-sticky{position:sticky;top:100px}
 .step{border-radius:16px;padding:1.8rem 2rem;margin-bottom:1rem;transition:border-color .4s,background .4s,transform .4s, box-shadow .4s;}
@@ -176,9 +154,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease; }
 .glass-panel:hover { border-color: rgba(255,255,255,0.15); }
 
-/* =========================================
-   สไตล์ใหม่ Step 3: Live Countdown
-========================================= */
+/* Live Countdown */
 .event-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: stretch; margin-top: 20px; }
 .countdown-card { padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 20px; border-color: var(--theme-color); box-shadow: 0 0 40px rgba(0,0,0,0.5); position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.6) 100%); }
 .countdown-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--theme-color); box-shadow: 0 0 25px var(--theme-glow); transition: background 0.4s, box-shadow 0.4s; }
@@ -194,5 +170,30 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .time-lbl { font-family: var(--font-display); font-size: 0.6rem; color: var(--white); opacity: 0.6; letter-spacing: 0.15em; margin-top: 8px; }
 .time-sep { font-family: var(--font-display); font-size: 2.5rem; color: var(--dim); font-weight: 700; padding-top: 10px; }
 
+/* =========================================
+   สไตล์ใหม่ Step 3.2: Cinematic Gallery & Lightbox
+========================================= */
+.gallery-swiper{overflow:hidden;padding:2rem 0 3rem}
+.gallery-swiper .swiper-wrapper{align-items:center;padding:1rem 0}
+.gallery-slide{width:320px!important;height:220px;border-radius:16px;overflow:hidden;border:1px solid var(--border);position:relative;transform:rotate(-1.5deg);transition:transform .4s var(--ease-out),border-color .3s, box-shadow .3s;flex-shrink:0; background: var(--card);}
+.gallery-slide:nth-child(even){transform:rotate(1.5deg)}
+.gallery-slide:hover{transform:rotate(0deg) scale(1.04)!important;border-color:var(--theme-color); box-shadow: 0 10px 30px var(--theme-glow); z-index: 2;}
+
+.gallery-img-wrap { width: 100%; height: 100%; position: relative; overflow: hidden; }
+.gallery-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out); cursor: none; opacity: 0.8;}
+.gallery-slide:hover .gallery-img { transform: scale(1.1); opacity: 1; }
+
+.gallery-label{position:absolute;bottom:0;left:0;right:0;padding:1rem 1.1rem;background:linear-gradient(to top,rgba(7,7,14,1) 0%,transparent 100%);font-size:.85rem;color:var(--white);font-weight:700; pointer-events: none;}
+
+/* Lightbox Modal */
+.lightbox { position: fixed; inset: 0; z-index: 999999; display: none; align-items: center; justify-content: center; }
+.lightbox.active { display: flex; }
+.lightbox-bg { position: absolute; inset: 0; background: rgba(7, 7, 14, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); opacity: 0; cursor: none;}
+.lightbox-close { position: absolute; top: 30px; right: 40px; background: none; border: none; color: var(--dim); font-size: 3.5rem; cursor: none; z-index: 10; opacity: 0; transition: color 0.3s; font-family: var(--font-display); line-height: 1; }
+.lightbox-close:hover { color: var(--theme-color); text-shadow: 0 0 15px var(--theme-glow);}
+.lightbox-content { position: relative; z-index: 5; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; align-items: center; opacity: 0; transform: scale(0.95) translateY(20px); }
+.lightbox-img { max-width: 100%; max-height: 75vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); object-fit: contain; border: 1px solid var(--border); }
+.lightbox-caption { margin-top: 20px; font-family: var(--font-display); font-size: 1rem; color: var(--theme-color); letter-spacing: 0.15em; text-align: center; text-transform: uppercase; font-weight: bold;}
+
 @media(max-width:768px){.site-header{padding:0 20px}.nav-links{display:none}.hero{padding:5rem 20px 3rem}.hero-line:nth-child(1) .hero-line-inner,.hero-line:nth-child(2) .hero-line-inner{font-size:clamp(3.5rem,16vw,5.5rem)}.hero-line--sub .hero-line-inner{font-size:clamp(1.2rem,6vw,1.8rem)}.hero-bg-txt{display:none}.hero-bottom{flex-direction:column;align-items:flex-start;gap:24px}.hero-actions{align-items:flex-start}.hero-beacon-wrap{display:none}.scroll-indicator{left:20px}.container{padding:0 20px}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2)::after{display:none}.event-row{flex-wrap:wrap;gap:10px}.event-date{display:none}.steps-layout{grid-template-columns:1fr;gap:2rem}.steps-sticky{position:static}.social-grid-felix{grid-template-columns:1fr 1fr}.bcf-line{font-size:clamp(2.5rem,10vw,4.5rem)}.bcf-bottom{flex-direction:column;align-items:flex-start}.site-footer{padding:32px 20px}.footer-row{flex-direction:column;text-align:center}.footer-social{justify-content:center}.event-showcase{grid-template-columns: 1fr;}}
-@media(max-width:480px){.social-grid-felix{grid-template-columns:1fr}.hero-actions{flex-direction:column}.sif-handle{font-size:1.1rem}.cd-timer{gap: 5px;}.time-box{width: 55px;}.time-val{font-size: 2rem;}}
+@media(max-width:480px){.social-grid-felix{grid-template-columns:1fr}.hero-actions{flex-direction:column}.sif-handle{font-size:1.1rem}.cd-timer{gap: 5px;}.time-box{width: 55px;}.time-val{font-size: 2rem;}.lightbox-close{top: 15px; right: 20px;}}
