@@ -1,10 +1,8 @@
 /*
  * POGO SARABURI — ANIMATIONS & PRELOADER
- * VERSION: 4.0
- * LOCKED — อย่าแก้ Preloader sequence
+ * VERSION: 4.1 - Fixed bare text outside CSS blocks
  */
 
-v4.0 - Add assets/css/animations.css
 /* PRELOADER */
 .preloader{position:fixed;inset:0;background:#07070E;display:flex;align-items:center;justify-content:center;z-index:99999}
 
@@ -25,3 +23,7 @@ v4.0 - Add assets/css/animations.css
 /* 3D CHARS */
 .char{display:inline-block;backface-visibility:hidden;will-change:transform,opacity}
 .char-group{perspective:1200px;display:inline-block}
+
+/* SCROLL REVEAL — CSS-driven */
+.will-reveal{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.16,1,0.3,1),transform .6s cubic-bezier(0.16,1,0.3,1)}
+.will-reveal.revealed{opacity:1;transform:translateY(0)}
