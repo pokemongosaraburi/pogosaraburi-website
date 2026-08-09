@@ -1,7 +1,7 @@
 /*!
- * POGO SARABURI - MAIN JS v4.1 - STABLE
- * แก้: ไม่ set opacity:0 บน hero elements
- * GSAP เป็น optional enhancement เท่านั้น
+ * POGO SARABURI - MAIN JS v4.2
+ * Fixed: runEntrance() now animates ALL hero elements with opacity:0
+ * Fixed: proper load-order guard for GSAP
  */
 (function(){
 'use strict';
@@ -26,7 +26,7 @@ function runPreloader(onComplete){
 }
 
 // ============================================================
-// 2. HERO 3D TEXT REVEAL (optional — ถ้า GSAP พร้อม)
+// 2. HERO ENTRANCE — animate ALL elements that start opacity:0
 // ============================================================
 function runEntrance(){
   var T4='power4.inOut';
@@ -53,7 +53,6 @@ function runEntrance(){
   var c1=l1?splitChars(l1):[];
   var c2=l2?splitChars(l2):[];
 
-  // Set 3D initial — เฉพาะ chars เท่านั้น ไม่แตะ parent opacity
   gsap.set(c1,{rotationY:-90,z:500,x:-8,transformOrigin:'left center'});
   gsap.set(c2,{rotationY:-90,z:500,x:-8,transformOrigin:'left center'});
 
@@ -61,7 +60,12 @@ function runEntrance(){
   tl.to(c1,{rotationY:0,z:0,x:0,duration:1.2,ease:T4,stagger:{each:0.045,from:'start'}})
     .to(c2,{rotationY:0,z:0,x:0,duration:1.1,ease:T4,stagger:{each:0.04,from:'start'}},'-=0.85');
 
-  // Scroll indicator
+  // Fade in support elements
+  ['.hero-eyebrow','.hero-swap-row','.hero-desc','.hero-actions','.beacon-col'].forEach(function(sel,i){
+    var el=document.querySelector(sel);
+    if(el) tl.to(el,{opacity:1,y:0,duration:0.6,ease:'power2.out'},0.6+(i*0.1));
+  });
+
   var sl=document.getElementById('scrollLine');
   var slb=document.getElementById('scrollLabel');
   if(sl&&slb){
@@ -82,12 +86,8 @@ function initCursor(){
     mx=e.clientX;my=e.clientY;
     cur.classList.add('visible');dot.classList.add('visible');
   });
-  document.addEventListener('mouseleave',function(){
-    cur.classList.remove('visible');dot.classList.remove('visible');
-  });
-  document.addEventListener('mouseenter',function(){
-    cur.classList.add('visible');dot.classList.add('visible');
-  });
+  document.addEventListener('mouseleave',function(){cur.classList.remove('visible');dot.classList.remove('visible');});
+  document.addEventListener('mouseenter',function(){cur.classList.add('visible');dot.classList.add('visible');});
   document.addEventListener('mousedown',function(){cur.classList.add('clicking')});
   document.addEventListener('mouseup',function(){cur.classList.remove('clicking')});
   document.querySelectorAll('a,button,.event-card,.social-card,.gallery-slide').forEach(function(el){
@@ -137,39 +137,27 @@ function initScrollIndicator(){
 }
 
 // ============================================================
-// 6. SCROLL REVEAL — ใช้ CSS class แทน gsap.set opacity:0
+// 6. SCROLL REVEAL
 // ============================================================
 function initReveal(){
-  // เพิ่ม class reveal-ready แล้วใช้ CSS transition
   document.querySelectorAll('.event-card,.social-card,.stat-item').forEach(function(el,i){
     el.classList.add('will-reveal');
     new IntersectionObserver(function(entries){
       entries.forEach(function(en){
-        if(en.isIntersecting){
-          setTimeout(function(){el.classList.add('revealed');},(i%4)*80);
-        }
+        if(en.isIntersecting) setTimeout(function(){el.classList.add('revealed');},(i%4)*80);
       });
     },{threshold:.1}).observe(el);
   });
-
-  // Reveal lines
   document.querySelectorAll('.reveal-line').forEach(function(el){
     new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting)el.classList.add('visible');
-      });
+      entries.forEach(function(en){if(en.isIntersecting)el.classList.add('visible');});
     },{threshold:.3}).observe(el);
   });
-
-  // Big CTA color
   var bw=document.querySelector('.big-cta-wrap');
   if(bw){
     new IntersectionObserver(function(entries){
       entries.forEach(function(en){
-        gsap.to('.big-cta-item',{
-          color:en.isIntersecting?'rgba(255,215,0,.22)':'rgba(255,215,0,.07)',
-          duration:.8,ease:'power2.out'
-        });
+        gsap.to('.big-cta-item',{color:en.isIntersecting?'rgba(255,215,0,.22)':'rgba(255,215,0,.07)',duration:.8,ease:'power2.out'});
       });
     },{threshold:.2}).observe(bw);
   }
@@ -183,10 +171,7 @@ function initSteps(){
   steps.forEach(function(s){
     new IntersectionObserver(function(entries){
       entries.forEach(function(en){
-        if(en.isIntersecting){
-          steps.forEach(function(x){x.classList.remove('active')});
-          en.target.classList.add('active');
-        }
+        if(en.isIntersecting){steps.forEach(function(x){x.classList.remove('active')});en.target.classList.add('active');}
       });
     },{threshold:.55,rootMargin:'-15% 0px -15% 0px'}).observe(s);
   });
