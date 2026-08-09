@@ -15,15 +15,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Pokemon GO Saraburi","url":"https://pogosaraburi.com","description":"กลุ่ม Pokemon GO จังหวัดสระบุรี","areaServed":{"@type":"Place","name":"สระบุรี"},"sameAs":["https://www.facebook.com/groups/pokemongosaraburi"]}</script>
 </head>
 <body class="loading">
   <div class="cursor" id="cursor"></div>
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="side-label">POGOSARABURI.COM &nbsp;·&nbsp; กลุ่ม POKEMON GO สระบุรี</div>
-  <!-- PRELOADER LOCKED -->
+  <!-- PRELOADER -->
   <div class="preloader" id="preloader">
     <div class="preloader-text">POKEMON GO SARABURI</div>
     <div class="preloader-ball">
@@ -171,7 +169,8 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide big-cta-item">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
           <div class="swiper-slide big-cta-item" aria-hidden="true">ออกล่าด้วยกัน <span class="big-cta-dot"></span> RAID TOGETHER <span class="big-cta-dot"></span> POGO SARABURI <span class="big-cta-dot"></span> เข้าร่วมเลย <span class="big-cta-dot"></span></div>
-v4.0 - Rebuild index.html multi-file structure + Pokeball preloader      </div>
+        </div>
+      </div>
     </div>
     <!-- JOIN -->
     <section class="join-section" id="join">
@@ -188,7 +187,10 @@ v4.0 - Rebuild index.html multi-file structure + Pokeball preloader      </div>
   </main>
   <!-- FOOTER inject โดย components.js -->
   <div id="footer-placeholder"></div>
+  <!-- SCRIPTS — โหลด sync ก่อน </body> ตาม PlutoTechX pattern -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
   <script src="/assets/js/components.js"></script>
   <script src="/assets/js/main.js"></script>
 </body>
-</html>
+    </html>
